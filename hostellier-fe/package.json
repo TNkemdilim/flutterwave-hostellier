@@ -1,0 +1,51 @@
+{
+  "name": "hostellier",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit",
+    "deploy": "node ./node_modules/vue-gh-pages/index.js"
+  },
+  "homepage": "https://github.com/tnkemdilim/hostellier",
+  "wst": "/dist/",
+  "dependencies": {
+    "bootstrap": "^4.1.2",
+    "popper.js": "^1.14.3",
+    "semantic-ui-css": "^2.3.3",
+    "semantic-ui-vue": "^0.2.11",
+    "vue": "^2.5.16",
+    "vue-paystack": "^1.0.1",
+    "vue-router": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.0.0-rc.5",
+    "@vue/cli-plugin-eslint": "^3.0.0-rc.5",
+    "@vue/cli-plugin-unit-mocha": "^3.0.0-rc.5",
+    "@vue/cli-service": "^3.0.0-rc.5",
+    "@vue/eslint-config-prettier": "^3.0.0-rc.5",
+    "@vue/test-utils": "^1.0.0-beta.20",
+    "chai": "^4.1.2",
+    "lint-staged": "^7.2.0",
+    "node-sass": "^4.9.2",
+    "sass-loader": "^7.0.3",
+    "style-loader": "^0.21.0",
+    "vue-gh-pages": "^1.16.3",
+    "vue-template-compiler": "^2.5.16"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "vue-cli-service lint",
+      "git add"
+    ],
+    "*.vue": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  }
+}
