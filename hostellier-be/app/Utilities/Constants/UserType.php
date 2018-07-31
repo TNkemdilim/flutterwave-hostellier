@@ -2,7 +2,7 @@
 
 namespace App\Utilities\Constants;
 
-class UserType
+class UserEnum
 {
     const STUDENT = 'student';
 }

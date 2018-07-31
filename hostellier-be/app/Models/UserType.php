@@ -5,7 +5,7 @@ namespace App\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 
-class UserType extends Model
+class UserEnum extends Model
 {
     use Notifiable;
 

@@ -3,7 +3,7 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Utilities\Constants\UserType;
+use App\Utilities\Constants\UserEnum;
 
 class User extends Authenticatable
 {
@@ -34,7 +34,7 @@ class User extends Authenticatable
      */
     public function accountType()
     {
-        return $this->belongsTo('App\Models\UserType');
+        return $this->belongsTo('App\Models\UserEnum');
     }
 
     /**
@@ -44,7 +44,7 @@ class User extends Authenticatable
      */
     public function isStudent()
     {
-        return strtolower($this->accountType()->first()->name) == UserType::STUDENT;
+        return strtolower($this->accountType()->first()->name) == UserEnum::STUDENT;
     }
 
     /**
