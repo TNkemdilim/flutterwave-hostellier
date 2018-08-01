@@ -10,6 +10,25 @@ class OffCampusRoom extends Model
     use Notifiable;
 
     /**
+     * Validation rules for an off-campus during create.
+     * 
+     * @return Array
+     */
+    public static function getValidationRulesForCreate()
+    {
+        return [
+            'title' => 'required|string|min:3',
+            'city' => 'required|string|min:3',
+            'state' => 'required|string|min:3',
+            'country' => 'required|string|min:3',
+            'description' => 'required|string|min:10',
+            'price' => 'required|numeric|min:0',
+            'picture' => 'required|url',
+            'booked' => 'sometimes|required|boolean',
+        ];
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

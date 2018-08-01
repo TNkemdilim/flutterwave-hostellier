@@ -5,9 +5,12 @@ namespace App\Http\Requests\Profile;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Student;
+use App\Utilities\Response\JsonResponse;
 
 class UpdateProfileRequest extends FormRequest
 {
+    use JsonResponse;
+
     private $_model;
 
     /**
@@ -42,10 +45,13 @@ class UpdateProfileRequest extends FormRequest
     /**
      * Updates the user's profile data.
      * 
-     * @return JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function updateProfile() 
     {
-        $this->_model->update($this->all());
+        return successResponse(
+            'Successfully updated profile.',
+            $this->_model->update($this->all())
+        );
     }
 }
