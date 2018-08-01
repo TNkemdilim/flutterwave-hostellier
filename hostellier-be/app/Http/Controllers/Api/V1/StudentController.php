@@ -50,7 +50,7 @@ class StudentController extends Controller
     /**
      * Get all the rooms booked by a student (both on-campus & off-campus).
      * 
-     * @return JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function getAllBookings()
     {
@@ -87,7 +87,7 @@ class StudentController extends Controller
     /**
      * Get all on-campus bookings for a student.
      * 
-     * @return JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function getAllOnCampusBookings()
     {

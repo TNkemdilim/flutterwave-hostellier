@@ -26,7 +26,7 @@ class AuthController extends Controller
      *
      * @param LoginStudentRequest $request  
      * 
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function loginStudent(LoginStudentRequest $request)
     {
@@ -38,7 +38,7 @@ class AuthController extends Controller
      *
      * @param RegisterStudentRequest $request 
      * 
-     * @return Array  
+     * @return \Illuminate\Http\Response
      */
     public function registerStudent(RegisterStudentRequest $request)
     {
@@ -50,7 +50,7 @@ class AuthController extends Controller
      *
      * @param Request $request  
      * 
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function changePassword(ChangePasswordRequest $request)
     {

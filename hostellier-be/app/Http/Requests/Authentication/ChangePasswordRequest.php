@@ -3,10 +3,13 @@
 namespace App\Http\Requests\Authentication;
 
 use Hash;
+use App\Utilities\Response\JsonResponse;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ChangePasswordRequest extends FormRequest
 {
+    use JsonResponse;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -34,31 +37,23 @@ class ChangePasswordRequest extends FormRequest
     /**
      * Change a user password.
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function changePassword()
     {
         $loggedInUser = auth()->user();
 
         if (!Hash::check($this->current_password, $loggedInUser->password)) {
-            return response()->json(
-                [
-                    'status' => false,
-                    'message' => 'Incorrect password specified.'
-                ], 200
-            );
+            return failedJsonResponse($message = 'Incorrect password specified.');
         }
         
         $user = User::find($loggedInUser->id);
         $user->password = bcrypt($this->new_password);
         $data = $user->save();
 
-        return response()->json(
-            [
-                'status' => true,
-                'message' => 'Successully changed your password.',
-                'data' => $data
-            ], 200
+        return successJsonResponse(
+            $message = 'Successully changed your password.',
+            $data = $data
         );
     }
 }
