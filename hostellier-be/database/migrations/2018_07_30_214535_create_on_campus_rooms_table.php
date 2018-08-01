@@ -19,7 +19,7 @@ class CreateOnCampusRoomsTable extends Migration
             $table->string('hall_name');
             $table->string('hall_location');
             $table->mediumText('description');
-            $table->float('price')->default(0.0);
+            $table->double('price', 8, 2)->default(0.0);
             $table->integer('students_per_room')->default(4);
             $table->string('picture');
             $table->boolean('booked')->default(false);

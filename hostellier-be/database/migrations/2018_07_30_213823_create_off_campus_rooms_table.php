@@ -20,7 +20,7 @@ class CreateOffCampusRoomsTable extends Migration
             $table->string('state');
             $table->string('country');
             $table->mediumText('description');
-            $table->float('price')->default(0.0);
+            $table->double('price', 8, 2)->default(0.0);
             $table->string('picture');
             $table->boolean('booked')->default(false);
             $table->timestamps();
