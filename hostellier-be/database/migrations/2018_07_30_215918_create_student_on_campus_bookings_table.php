@@ -17,6 +17,7 @@ class CreateStudentOnCampusBookingsTable extends Migration
             $table->increments('id');
             $table->integer('student_id')->unsigned();
             $table->integer('on_campus_room_id')->unsigned();
+            $table->string('transaction_reference');
             $table->datetime('expiring_at');
             $table->timestamps();
         });

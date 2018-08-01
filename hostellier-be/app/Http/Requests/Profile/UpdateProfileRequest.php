@@ -49,7 +49,7 @@ class UpdateProfileRequest extends FormRequest
      */
     public function updateProfile() 
     {
-        return successResponse(
+        return successJsonResponse(
             'Successfully updated profile.',
             $this->_model->update($this->all())
         );

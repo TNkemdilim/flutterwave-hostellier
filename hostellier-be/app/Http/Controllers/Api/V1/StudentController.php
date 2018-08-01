@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Traits\UserProfileTrait;
-use Illuminate\Http\Request;
-use App\Utilities\Constants\UserEnum;
 use App\Models\Student;
+use Illuminate\Http\Request;
+use App\Traits\UserProfileTrait;
+use App\Utilities\Constants\UserEnum;
 
 class StudentController extends Controller
 {
@@ -57,8 +57,8 @@ class StudentController extends Controller
         $student = $this->specificUserDetails();
 
         return successJsonResponse(
-            $message = 'Successfully retrieved student bookings.',
-            $data = [
+            'Successfully retrieved student bookings.',
+            [
                 'bookings' => [
                     'on_campus' => $student->onCampusBookings()->get(),
                     'off_campus' => $student->offCampusBookings()->get()
@@ -77,10 +77,8 @@ class StudentController extends Controller
         $student = $this->specificUserDetails();
 
         return successJsonResponse(
-            $message = 'Successfully retrieved student\'s off-campus bookings.',
-            $data = [
-                'bookings' => $student->offCampusBookings()->get()->toArray()
-            ]
+            'Successfully retrieved student\'s off-campus bookings.',
+            [ 'bookings' => $student->offCampusBookings()->get()->toArray() ]
         );
     }
 
@@ -94,10 +92,8 @@ class StudentController extends Controller
         $student = $this->specificUserDetails();
 
         return successJsonResponse(
-            $message = 'Successfully retrieved student\'s off-campus bookings.',
-            $data = [
-                'bookings' => $student->offCampusBookings()->get()->toArray()
-            ]
+            'Successfully retrieved student\'s off-campus bookings.',
+            [ 'bookings' => $student->offCampusBookings()->get()->toArray() ]
         );
     }
 }

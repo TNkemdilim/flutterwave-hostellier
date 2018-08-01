@@ -19,7 +19,7 @@ class RoomController extends Controller
     public function index()
     {
         // Todo: Optimize query by utilizing in-built `chunk(...)` method.
-        return successResponse(
+        return successJsonResponse(
             'Successfully retrieved all rooms',
             [
                 'on_campus' => OnCampusRoom::all(),
@@ -36,7 +36,7 @@ class RoomController extends Controller
     public function indexOffCampusRooms()
     {
         // Todo: Optimize query by utilizing in-built `chunk(...)` method.
-        return successResponse(
+        return successJsonResponse(
             'Successfully retrieved all off-campus rooms',
             OffCampusRoom::all()
         );
@@ -52,7 +52,7 @@ class RoomController extends Controller
         // Todo: 
         // 1. Optimize query by utilizing in-built `chunk(...)` method.
         // 2. Return rooms available for a specific course of study.
-        return successResponse(
+        return successJsonResponse(
             'Successfully retrieved all on-campus rooms',
             OnCampusRoom::all()
         );
@@ -61,7 +61,7 @@ class RoomController extends Controller
     /**
      * Create a new off-campus room.
      *
-     * @param CreateOffCampusRoomRequest $request 
+     * @param \App\Http\Requests\Room\CreateOffCampusRoomRequest $request 
      * 
      * @return \Illuminate\Http\Response
      */
@@ -73,7 +73,7 @@ class RoomController extends Controller
     /**
      * Create a new on-campus room.
      *
-     * @param \Illuminate\Http\Request $request 
+     * @param \App\Http\Requests\Room\CreateOnCampusRoomRequest $request 
      * 
      * @return \Illuminate\Http\Response
      */
@@ -92,7 +92,7 @@ class RoomController extends Controller
     public function getOffCampusRoom(OffCampusRoom $room)
     {
         try {
-            return successResponse(
+            return successJsonResponse(
                 'Successfully retrieved off-campus room.',
                 OffCampusRoom::findOfFail($room->id)
             );
@@ -113,7 +113,7 @@ class RoomController extends Controller
     public function getOnCampusRoom(OnCampusRoom $room)
     {
         try {
-            return successResponse(
+            return successJsonResponse(
                 'Successfully retrieved on-campus room.',
                 OnCampusRoom::findOfFail($room->id)
             );
@@ -127,8 +127,8 @@ class RoomController extends Controller
     /**
      * Update an off-campus room.
      *
-     * @param \Illuminate\Http\Request  $request 
-     * @param \App\Models\OffCampusRoom $room 
+     * @param \App\Http\Requests\Room\CreateOffCampusRoomRequest $request 
+     * @param \App\Models\OffCampusRoom                          $room 
      * 
      * @return \Illuminate\Http\Response 
      */
@@ -141,8 +141,8 @@ class RoomController extends Controller
     /**
      * Update an on-campus room.
      *
-     * @param \Illuminate\Http\Request  $request 
-     * @param \App\Models\OffCampusRoom $room 
+     * @param \App\Http\Requests\Room\CreateOnCampusRoomRequest $request 
+     * @param \App\Models\OffCampusRoom                         $room 
      * 
      * @return \Illuminate\Http\Response 
      */
@@ -162,7 +162,10 @@ class RoomController extends Controller
     public function destroyOffCampusRoom(OffCampusRoom $room)
     {
         try {
-            OffCampus::findOrFail($room->id)->delete();
+            return successJsonResponse(
+                'Successfully deleted off-campus room.',
+                OffCampus::findOrFail($room->id)->delete()
+            );
         } catch (ModelNotFoundException $ex) {
             return failedJsonResponse(
                 'The specified off-campus room doesn\'t exist.'
@@ -180,7 +183,10 @@ class RoomController extends Controller
     public function destroyOnCampusRoom(OnCampusRoom $room)
     {
         try {
-            OnCampus::findOrFail($room->id)->delete();
+            return successJsonResponse(
+                'Successfully deleted on-campus room.',
+                OnCampus::findOrFail($room->id)->delete()
+            );
         } catch (ModelNotFoundException $ex) {
             return failedJsonResponse(
                 'The specified on-campus room doesn\'t exist.'

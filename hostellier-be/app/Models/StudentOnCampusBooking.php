@@ -17,6 +17,7 @@ class StudentOnCampusBooking extends Model
     protected $fillable = [
         'student_id',
         'on_campus_room_id',
+        'transaction_reference',
         'expiring_at',
     ];
 

@@ -37,7 +37,7 @@ class CreateOnCampusRoomRequest extends FormRequest
      */
     public function createRoom()
     {
-        return successResponse(
+        return successJsonResponse(
             'Successfully created on-campus room.',
             OnCampusRoom::create($this->all())
         );
