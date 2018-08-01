@@ -40,7 +40,7 @@ class ChangePasswordRequest extends FormRequest
     {
         $loggedInUser = auth()->user();
 
-        if (!Hash::check($request->current_password, $loggedInUser->password)) {
+        if (!Hash::check($this->current_password, $loggedInUser->password)) {
             return response()->json(
                 [
                     'status' => false,
@@ -50,7 +50,7 @@ class ChangePasswordRequest extends FormRequest
         }
         
         $user = User::find($loggedInUser->id);
-        $user->password = bcrypt($request->new_password);
+        $user->password = bcrypt($this->new_password);
         $data = $user->save();
 
         return response()->json(

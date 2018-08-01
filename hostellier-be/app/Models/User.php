@@ -54,7 +54,8 @@ class User extends Authenticatable
      */
     public function student()
     {
-        if ($this->isStudent()) {
+        if (!$this->isStudent()) {
+            // Replace this with a throwing of custom exception.
             return response()->json(
                 [
                     'status' => false,

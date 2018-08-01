@@ -39,7 +39,7 @@ class LoginStudentRequest extends FormRequest
      */
     public function loginStudent()
     {
-        if (!auth()->attempt(['email' => $request->email, 'password' => $request->password])) {
+        if (!auth()->attempt(['email' => $this->email, 'password' => $this->password])) {
             return response()->json(
                 [
                     'status' => false,

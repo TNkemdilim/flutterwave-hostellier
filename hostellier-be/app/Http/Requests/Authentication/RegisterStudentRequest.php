@@ -26,15 +26,7 @@ class RegisterStudentRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'email' => 'required|email|string|max:255|unique:users,email',
-            'password' => 'required|string|min:8',
-            'c_password' => 'required|string|same:password',
-
-            'firstname' => 'required|string',
-            'lastname' => 'required|string',
-            'timezone' => 'required|timezone'
-        ];
+        return Student::getValidationRulesForCreate();
     }
 
     /**
@@ -50,36 +42,36 @@ class RegisterStudentRequest extends FormRequest
             return response()->json(
                 [
                     'status' => false,
-                    'message' => 'Sorry, registration failed.',
-                ], 401
+                    'message' => 
+                        "Sorry, we currently do not support user type of 
+                        ${UserEnum::STUDENT}.",
+                ], 500
             );
         }
 
         $newUser = User::create(
             [
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
+                'email' => $this->email,
+                'password' => bcrypt($this->password),
                 'account_type_id' => $accountTypeDBId,
             ]
         );
 
-        $newInfluencer = Student::create(
+        $newStudent = Student::create(
             [
                 'user_id' => $newUser->id,
-                'firstname' => $request->firstname,
-                'lastname' => $request->lastname,
-                'wavecoin' => 0.0,
-                'score' => 0.0,
-                'timezone' => $request->timezone,
+                'firstname' => $this->firstname,
+                'lastname' => $this->lastname,
+                'level' => $this->level,
             ]
         );
 
-        SendMailQueue::dispatch(new WelcomeNewInfluencer($newUser), $newUser);
+        // Send mail to user by dispatching to email sending queue.
 
         return response()->json(
             [
                 'status' => true,
-                'message' => 'Successfully registered user.',
+                'message' => 'Successfully registered student.',
             ], 200
         );
     }

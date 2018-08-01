@@ -2,12 +2,41 @@
 
 namespace App\Models;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
     use Notifiable;
+
+    /**
+     * Validation rules for a student during create.
+     * 
+     * @return Array
+     */
+    public static function getValidationRulesForCreate()
+    {
+        return [
+            'firstname' => 'required|string|min:2',
+            'lastname' => 'required|string|min:2',
+            'level' => ['sometimes', 'required', Rule::in([1, 2, 3, 4, 5])],
+        ];
+    }
+
+    /**
+     * Validation rules for a student during update.
+     * 
+     * @return Array
+     */
+    public static function getValidationRulesForUpdate()
+    {
+        return [
+            'firstname' => 'sometimes|required|string|min:2',
+            'lastname' => 'sometimes|required|string|min:2',
+            'level' => ['sometimes', 'required', Rule::in([1, 2, 3, 4, 5])],
+        ];
+    }
 
     /**
      * The attributes that are mass assignable.
