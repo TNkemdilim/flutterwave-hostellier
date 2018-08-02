@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Models\OffCampusRoom;
 use App\Models\OnCampusRoom;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Room\CreateOffCampusRoomRequest;
 use App\Http\Requests\Room\CreateOnCampusRoomRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -19,11 +20,11 @@ class RoomController extends Controller
     public function index()
     {
         // Todo: Optimize query by utilizing in-built `chunk(...)` method.
-        return successJsonResponse(
+        return self::successJsonResponse(
             'Successfully retrieved all rooms',
             [
-                'on_campus' => OnCampusRoom::all(),
-                'off_campus' => OffCampusRoom::all()
+                'on_campus' => OnCampusRoom::where('booked', false)->get(),
+                'off_campus' => OffCampusRoom::where('booked', false)->get()
             ]
         );
     }
@@ -36,9 +37,9 @@ class RoomController extends Controller
     public function indexOffCampusRooms()
     {
         // Todo: Optimize query by utilizing in-built `chunk(...)` method.
-        return successJsonResponse(
+        return self::successJsonResponse(
             'Successfully retrieved all off-campus rooms',
-            OffCampusRoom::all()
+            OffCampusRoom::where('booked', false)->get()
         );
     }
 
@@ -52,9 +53,9 @@ class RoomController extends Controller
         // Todo: 
         // 1. Optimize query by utilizing in-built `chunk(...)` method.
         // 2. Return rooms available for a specific course of study.
-        return successJsonResponse(
+        return self::successJsonResponse(
             'Successfully retrieved all on-campus rooms',
-            OnCampusRoom::all()
+            OnCampusRoom::where('booked', false)->get()
         );
     }
 

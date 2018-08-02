@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Traits\UserProfileTrait;
+use App\Http\Controllers\Controller;
 use App\Utilities\Constants\UserEnum;
 
 class StudentController extends Controller
@@ -44,7 +45,7 @@ class StudentController extends Controller
      */
     protected function specificUserDetails()
     {
-        return auth()->user()->student();
+        return auth()->user()->student()->first();
     }
 
     /**
