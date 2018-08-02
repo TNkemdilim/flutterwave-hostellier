@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="image">
-      <img style="height: 200px;" src="https://semantic-ui.com/images/avatar2/large/elyse.png">
+      <img style="height: 200px;" :src="hostelImage">
     </div>
     <div class="content">
       <div class="header">One Bedroom Flat</div>
@@ -14,18 +14,7 @@
     </div>
     <div class="extra content">
       <span class="right floated">
-        <paystack
-            :amount="10"
-            :email="'nkemdilimtochukwu@gmail.com'"
-            :paystackkey="'paystackkey'"
-            :reference="'reference'"
-            :callback="callback"
-            :close="close"
-            :embed="false"
-            :text="'Purchase $100'"
-            class="ui primary button"
-        >
-        </paystack>
+        <button class="ui primary button">Purchase $100</button>
       </span>
       <span>
         <i class="clock icon"></i>
@@ -36,14 +25,16 @@
 </template>
 
 <script>
-import paystack from "vue-paystack";
+import HostelImage from "../../assets/img/hostel.jpg";
 
 export default {
   name: "hostel-card",
-  components: {
-    paystack
+  components: {},
+  data() {
+    return {
+      hostelImage: HostelImage
+    };
   },
-
   methods: {
     trimTo160Characters: function(s) {
       return s.substr(0, 160) + "...";

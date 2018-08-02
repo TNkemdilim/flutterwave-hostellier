@@ -22,7 +22,6 @@
     "semantic-ui-css": "^2.3.3",
     "semantic-ui-vue": "^0.2.11",
     "vue": "^2.5.16",
-    "vue-paystack": "^1.0.1",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
