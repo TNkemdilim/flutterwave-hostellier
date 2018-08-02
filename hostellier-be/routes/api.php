@@ -13,12 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
-    return '$request->user()';
-});
-
 /**
  * 🎉 Authentication & Registration
  */
 Route::post('auth/student/login', 'Api\V1\AuthController@loginStudent');
 Route::post('auth/student/register', 'Api\V1\AuthController@registerStudent');
+
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get('/rooms/off-campus', 'Api\V1\RoomController@index');
+});

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Authentication;
 
+use Auth;
 use App\Http\Requests\BaseFormRequest;
 
 use App\Utilities\Constants\UserEnum;
@@ -39,7 +40,7 @@ class LoginStudentRequest extends BaseFormRequest
      */
     public function loginStudent()
     {
-        if (!auth()->attempt(['email' => $this->email, 'password' => $this->password])) {
+        if (!Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
             return response()->json(
                 [
                     'status' => false,

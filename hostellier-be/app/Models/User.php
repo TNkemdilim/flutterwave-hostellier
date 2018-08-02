@@ -4,10 +4,11 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Utilities\Constants\UserEnum;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasApiTokens, Notifiable;
 
     /**
      * Validation rules for a user during create.
@@ -48,7 +49,7 @@ class User extends Authenticatable
      */
     public function accountType()
     {
-        return $this->belongsTo('App\Models\UserEnum');
+        return $this->belongsTo('App\Models\UserType', 'user_type_id');
     }
 
     /**
