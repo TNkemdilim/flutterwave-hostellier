@@ -28,13 +28,28 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/rooms/on-campus', 'Api\V1\RoomController@indexOnCampusRooms');
 });
 
+/**
+ * 🎉 
+ */
 Route::group(['middleware' => ['auth:api', 'api.student']], function () {
-    // Profile
+    // Student Profile
     Route::get('/me', 'Api\V1\StudentController@showProfile');
-    Route::post('/me', 'Api\V1\StudentController@index');
+    Route::post('/me', 'Api\V1\StudentController@index'); // not yet tested
+    
+    // Booking
+    Route::get('/me/booking', 'Api\V1\StudentController@getAllBookings');
+    Route::get('/me/booking/off-campus', 'Api\V1\StudentController@getAllOffCampusBookings');
+    Route::get('/me/booking/on-campus', 'Api\V1\StudentController@getAllOnCampusBookings');
+    
+    Route::post('/booking/off-campus', 'Api\V1\BookingController@createOffCampusBooking');
+    Route::post('/booking/on-campus', 'Api\V1\BookingController@createOnCampusBooking');
+});
 
-    // Bookings
-    Route::get('/me/booking', 'Api\V1\BookingController@indexOffCampusRooms');
-    Route::get('/me/booking/off-campus', 'Api\V1\BookingController@indexOnCampusRooms');
-    Route::get('/me/booking/on-campus', 'Api\V1\BookingController@indexOnCampusRooms');
+/**
+ * 🎉 
+ */
+Route::group(['middleware' => ['auth:api', 'api.admin']], function () {
+    // Rooms
+    Route::post('/rooms/off-campus', 'Api\V1\RoomController@createOffCampusRoom');
+    Route::post('/rooms/on-campus', 'Api\V1\RoomController@createOnCampusRoom');
 });

@@ -7,8 +7,6 @@ use App\Http\Requests\BaseFormRequest;
 
 class CreateOffCampusRoomRequest extends BaseFormRequest
 {
-    use JsonResponse;
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -36,7 +34,7 @@ class CreateOffCampusRoomRequest extends BaseFormRequest
      */
     public function createRoom()
     {
-        return successJsonResponse(
+        return self::successJsonResponse(
             'Successfully created off-campus room.',
             OffCampusRoom::create($this->all())
         );

@@ -57,7 +57,7 @@ class StudentController extends Controller
     {
         $student = $this->specificUserDetails();
 
-        return successJsonResponse(
+        return self::successJsonResponse(
             'Successfully retrieved student bookings.',
             [
                 'bookings' => [
@@ -77,7 +77,7 @@ class StudentController extends Controller
     {
         $student = $this->specificUserDetails();
 
-        return successJsonResponse(
+        return self::successJsonResponse(
             'Successfully retrieved student\'s off-campus bookings.',
             [ 'bookings' => $student->offCampusBookings()->get()->toArray() ]
         );
@@ -92,7 +92,7 @@ class StudentController extends Controller
     {
         $student = $this->specificUserDetails();
 
-        return successJsonResponse(
+        return self::successJsonResponse(
             'Successfully retrieved student\'s off-campus bookings.',
             [ 'bookings' => $student->offCampusBookings()->get()->toArray() ]
         );

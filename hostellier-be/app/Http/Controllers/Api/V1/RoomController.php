@@ -80,6 +80,7 @@ class RoomController extends Controller
      */
     public function createOnCampusRoom(CreateOnCampusRoomRequest $request)
     {
+        
         return $request->createRoom();
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Controller;
 use App\Models\StudentOnCampusBooking;
 use App\Models\StudentOffCampusBooking;
 use App\Http\Requests\Booking\CreateOnCampusBookingRequest;

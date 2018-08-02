@@ -86,7 +86,7 @@ class Student extends Model
      */
     public function offCampusBookings()
     {
-        return $this->hasMany('App\Models\OffCampusBookings');
+        return $this->hasMany('App\Models\StudentOffCampusBooking');
     }
 
     /**
@@ -96,6 +96,6 @@ class Student extends Model
      */
     public function onCampusBookings()
     {
-        return $this->hasMany('App\Models\OnCampusBookings');
+        return $this->hasMany('App\Models\StudentOnCampusBooking');
     }
 }

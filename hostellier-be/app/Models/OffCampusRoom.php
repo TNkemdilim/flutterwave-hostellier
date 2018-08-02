@@ -22,7 +22,7 @@ class OffCampusRoom extends Model
             'state' => 'required|string|min:3',
             'country' => 'required|string|min:3',
             'description' => 'required|string|min:10',
-            'price' => 'required|numeric|min:0',
+            'price' => 'required|numeric|min:0', // per month
             'picture' => 'required|url',
             'booked' => 'sometimes|required|boolean',
         ];
