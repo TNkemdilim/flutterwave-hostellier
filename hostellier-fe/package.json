@@ -6,13 +6,16 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "start": "node server.js",
     "test:unit": "vue-cli-service test:unit",
     "deploy": "node ./node_modules/vue-gh-pages/index.js"
   },
   "homepage": "https://github.com/tnkemdilim/hostellier",
   "wst": "/dist/",
   "dependencies": {
+    "axios": "^0.18.0",
     "bootstrap": "^4.1.2",
+    "express": "^4.16.3",
     "popper.js": "^1.14.3",
     "semantic-ui-css": "^2.3.3",
     "semantic-ui-vue": "^0.2.11",
