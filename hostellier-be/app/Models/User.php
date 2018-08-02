@@ -10,12 +10,26 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
+     * Validation rules for a user during create.
+     * 
+     * @return Array
+     */
+    public static function getValidationRulesForCreate()
+    {
+        return [
+            'email' => 'required|string|min:2',
+            'password' => 'required|string|min:8',
+            'c_password' => 'required|string|same:password',
+        ];
+    }
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'email', 'password',
+        'email', 'password', 'user_type_id'
     ];
 
     /**

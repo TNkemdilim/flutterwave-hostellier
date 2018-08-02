@@ -12,10 +12,10 @@ trait JsonResponse
      * 
      * @return \Illuminate\Http\Response
      */
-    protected function successJsonResponse($message = null, $data = null)
+    protected static function successJsonResponse($message = null, $data = null)
     {
         $response = [ 'status' => true ];
-        $this->_addBasicField($response, $message,  $data);
+        self::_addBasicField($response, $message,  $data);
         return response()->json($response, 200);
     }
 
@@ -27,10 +27,10 @@ trait JsonResponse
      * 
      * @return \Illuminate\Http\Response
      */
-    protected function failedJsonResponse($message = null, $data = null)
+    protected static function failedJsonResponse($message = null, $data = null)
     {
         $response = [ 'status' => false ];
-        $this->_addBasicField($response, $message,  $data);
+        self::_addBasicField($response, $message,  $data);
         return response()->json($response, 200);
     }
     
@@ -43,14 +43,14 @@ trait JsonResponse
      * 
      * @return void
      */
-    private function _addBasicField(&$sourceArray, &$message = null, &$data = null)
+    private static function _addBasicField(&$sourceArray, &$message = null, &$data = null)
     {
         if (!is_null($message)) {
-            array_push($response, ['message' => $message]);
+            $sourceArray = array_merge($sourceArray, ['message' => $message]);
         }
     
         if (!is_null($data)) {
-            array_push($response, ['data' => $data]);
+            $sourceArray = array_merge($sourceArray, ['data' => $data]);
         }
     }
 }

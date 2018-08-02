@@ -3,10 +3,9 @@
 namespace App\Http\Requests\Room;
 
 use App\Models\OnCampusRoom;
-use Illuminate\Foundation\Http\FormRequest;
-use App\Utilities\Response\JsonResponse;
+use App\Http\Requests\BaseFormRequest;
 
-class CreateOnCampusRoomRequest extends FormRequest
+class CreateOnCampusRoomRequest extends BaseFormRequest
 {
     use JsonResponse;
 

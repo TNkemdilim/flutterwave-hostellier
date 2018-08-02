@@ -3,9 +3,9 @@
 namespace App\Http\Requests\Room;
 
 use App\Models\OnCampusRoom;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 
-class UpdateOffCampusRoomRequest extends FormRequest
+class UpdateOffCampusRoomRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -5,7 +5,7 @@ namespace App\Traits;
 /**
  * Vendore Packages
  */
-use Illuminate\Http\JsonResponse;
+use JsonResponse;
 
 /**
  * General Imports
@@ -22,7 +22,7 @@ trait UserProfileTrait
     /**
      * Shows the profile of the current user.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function showProfile() : JsonResponse
     {

@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests\Authentication;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 
 use App\Utilities\Constants\UserEnum;
 
-class LoginStudentRequest extends FormRequest
+class LoginStudentRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +15,7 @@ class LoginStudentRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**

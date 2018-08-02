@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Booking;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 
-class CreateOffCampusBookingRequest extends FormRequest
+class CreateOffCampusBookingRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

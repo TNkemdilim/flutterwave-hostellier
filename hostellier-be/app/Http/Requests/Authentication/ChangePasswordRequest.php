@@ -3,13 +3,10 @@
 namespace App\Http\Requests\Authentication;
 
 use Hash;
-use App\Utilities\Response\JsonResponse;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 
-class ChangePasswordRequest extends FormRequest
+class ChangePasswordRequest extends BaseFormRequest
 {
-    use JsonResponse;
-
     /**
      * Determine if the user is authorized to make this request.
      *

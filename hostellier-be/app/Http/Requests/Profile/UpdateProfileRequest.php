@@ -2,12 +2,12 @@
 
 namespace App\Http\Requests\Profile;
 
+use JsonResponse;
 use Illuminate\Validation\Rule;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 use App\Models\Student;
-use App\Utilities\Response\JsonResponse;
 
-class UpdateProfileRequest extends FormRequest
+class UpdateProfileRequest extends BaseFormRequest
 {
     use JsonResponse;
 

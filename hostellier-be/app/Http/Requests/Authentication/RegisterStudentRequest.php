@@ -3,11 +3,12 @@
 namespace App\Http\Requests\Authentication;
 
 use App\Utilities\Constants\UserEnum;
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 use App\Models\User;
 use App\Models\Student;
+use App\Models\UserType;
 
-class RegisterStudentRequest extends FormRequest
+class RegisterStudentRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,7 +17,7 @@ class RegisterStudentRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,7 +27,10 @@ class RegisterStudentRequest extends FormRequest
      */
     public function rules()
     {
-        return Student::getValidationRulesForCreate();
+        return array_merge(
+            User::getValidationRulesForCreate(),
+            Student::getValidationRulesForCreate()
+        );
     }
 
     /**
@@ -39,40 +43,37 @@ class RegisterStudentRequest extends FormRequest
         $accountTypeDBId = UserType::where('name', UserEnum::STUDENT)->first()->id;
 
         if (is_null($accountTypeDBId)) {
-            return response()->json(
-                [
-                    'status' => false,
-                    'message' => 
-                        "Sorry, we currently do not support user type of 
-                        ${UserEnum::STUDENT}.",
-                ], 500
+            return self::failedJsonResponse(
+                "Sorry, we currently do not support user type of 
+                ${UserEnum::STUDENT}."
             );
         }
 
-        $newUser = User::create(
-            [
-                'email' => $this->email,
-                'password' => bcrypt($this->password),
-                'account_type_id' => $accountTypeDBId,
-            ]
-        );
+        try {
+            $newUser = User::create(
+                [
+                    'email' => $this->email,
+                    'password' => bcrypt($this->password),
+                    'user_type_id' => $accountTypeDBId,
+                ]
+            );
+        } catch(\Illuminate\Database\QueryException $ex) {
+            return self::failedJsonResponse('User already exists');
+        }
 
         $newStudent = Student::create(
-            [
-                'user_id' => $newUser->id,
-                'firstname' => $this->firstname,
-                'lastname' => $this->lastname,
-                'level' => $this->level,
-            ]
+            array_merge(
+                [
+                   'user_id' => $newUser->id,
+                   'firstname' => $this->firstname,
+                   'lastname' => $this->lastname,
+                ],
+                isset($this->level) ? [ 'level' => $this->level] : []
+            )
         );
 
         // Send mail to user by dispatching to email sending queue.
 
-        return response()->json(
-            [
-                'status' => true,
-                'message' => 'Successfully registered student.',
-            ], 200
-        );
+        return self::successJsonResponse('Successfully registered student.');
     }
 }
