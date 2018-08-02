@@ -1,0 +1,11 @@
+{
+  "name": "hostellier",
+  "version": "0.0.1",
+  "description": "Hostellier poroject",
+  "author": {
+    "name": "Tochukwu Nkemdilim"
+  },
+  "dependencies": {
+    "express": "~4.9.0"
+  }
+}
