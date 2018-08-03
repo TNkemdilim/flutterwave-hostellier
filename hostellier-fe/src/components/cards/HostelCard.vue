@@ -4,21 +4,21 @@
       <img style="height: 200px;" :src="hostelImage">
     </div>
     <div class="content">
-      <div class="header">One Bedroom Flat</div>
+      <div class="header">{{room.title}}</div>
       <div class="meta">
-        <span class="date">Ikeja, Lagos</span>
+        <span class="date">{{room.city}}, {{room.country}}</span>
       </div>
       <div class="description">
-        {{ trimTo160Characters('The Hotel Hesperia is the right choice for visitors who are searching for a combination of charm, peace and quiet, and a convenient position from which to explore Venice. It is a small, comfortable hotel, situated on the Canale di Cannaregio. ... The hotel provides an internet point, and a Wi-Fi service.') }}
+        {{ trimTo160Characters(room.description) }}
       </div>
     </div>
     <div class="extra content">
       <span class="right floated">
-        <button class="ui primary button">Purchase $100</button>
+        <button class="ui primary button">Purchase ₦ {{room.price * 1000 | parseToDecimal}}</button>
       </span>
       <span>
         <i class="clock icon"></i>
-        11 hours ago
+        <timeago :datetime="room.created_at"></timeago>
       </span>
     </div>
   </div>
@@ -29,6 +29,7 @@ import HostelImage from "../../assets/img/hostel.jpg";
 
 export default {
   name: "hostel-card",
+  props: ["room"],
   components: {},
   data() {
     return {

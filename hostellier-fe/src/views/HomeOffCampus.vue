@@ -7,7 +7,7 @@
     <p>All rooms available for rent for students.</p>
     <br><br>
     <div class="ui link cards">
-      <hostel-card v-for="item in [1,2,3,5,6]" :key="item"/>
+      <hostel-card v-for="(room, index) in rooms" :room="room" :key="index"/>
     </div>
   </div>
 </template>
@@ -25,12 +25,15 @@ export default {
     this.getRooms();
   },
   data() {
-    return {};
+    return {
+      rooms: []
+    };
   },
   methods: {
     getRooms: async function() {
-      let rooms = await OffCampusRooms.getAllOffCampusRooms();
-      console.log(rooms);
+      let roomsResponse = await OffCampusRooms.getAllOffCampusRooms();
+      console.log(roomsResponse.data);
+      this.rooms = roomsResponse.data;
     }
   }
 };

@@ -9,7 +9,6 @@ class OffCampusRoomsApi {
   static async getAllOffCampusRooms() {
     try {
       var response = await HTTP.get(Endpoints.allOffCampusRooms);
-      console.log(response);
       return response.data;
     } catch (e) {
       return e.response.data;

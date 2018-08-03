@@ -2,6 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import VuexStore from "./store";
+import filters from "./utilities/filters";
 
 // External Components
 import Toasted from "vue-toasted";
