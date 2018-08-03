@@ -1,4 +1,4 @@
-const enpointVersion = "api/v1/";
+const enpointVersion = "api/v1";
 
 // Authentication
 export const loginStudent = `${enpointVersion}/auth/student/login`;

@@ -1,5 +1,5 @@
 const jwt = require("node.jwt");
-const SECRET = process.env.SECRET;
+const SECRET = process.env.VUE_APP_SECRET;
 
 export function encodeData(params) {
   var token = jwt.encode(params, SECRET);

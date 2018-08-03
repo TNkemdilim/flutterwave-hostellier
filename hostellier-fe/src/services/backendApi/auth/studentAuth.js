@@ -1,5 +1,5 @@
 import HTTP from "@/helpers/http";
-import * as Endpoints from "../../api/endpoints";
+import * as Endpoints from "../endpoints";
 
 class StudentAuthApi {
   /**

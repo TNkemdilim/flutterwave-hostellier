@@ -1,6 +1,6 @@
 import StudentManager from "../dataManager/studentManager";
 
-import StudentAuth from "../api/auth/studentAuth";
+import { StudentAuth } from "../../services/backendApi/auth";
 
 class Student {
   /**
@@ -8,6 +8,7 @@ class Student {
    */
   static isLoggedIn() {
     const studentData = StudentManager.getStudentData();
+    console.log(studentData);
     return !!studentData;
   }
 
@@ -21,7 +22,7 @@ class Student {
       await StudentManager.setStudentData(response.data);
     }
 
-    return response.data;
+    return response;
   }
 
   static async register(formData) {

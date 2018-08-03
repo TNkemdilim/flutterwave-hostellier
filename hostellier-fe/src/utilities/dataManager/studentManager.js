@@ -1,12 +1,12 @@
 import { encodeData, decodeData } from "../../helpers/encryption";
-const STUDENT_DATA = process.env.STUDENT_DATA;
+const STUDENT_DATA = process.env.VUE_APP_STUDENT_DATA;
 
 class Student {
   /**
    * Retrieves a students data from local storage.
    */
   static getStudentData() {
-    let data = localStorage.getItem(decodeData(STUDENT_DATA));
+    let data = decodeData(localStorage.getItem(STUDENT_DATA));
     if (data) return data;
 
     return null;
