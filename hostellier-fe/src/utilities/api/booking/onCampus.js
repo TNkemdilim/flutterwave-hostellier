@@ -8,7 +8,7 @@ class OnCampusBookingApi {
    */
   static async createOnCampusBooking(formData) {
     try {
-      var response = await HTTP.post(Endpoints.allOffCampusRooms, formData);
+      var response = await HTTP.post(Endpoints.createOnCampusBooking, formData);
       return response.data;
     } catch (e) {
       return e.response.data;
@@ -21,7 +21,7 @@ class OnCampusBookingApi {
    */
   static async getOnCampusBookingById(id) {
     try {
-      var response = await HTTP.get(`${Endpoints.allOnCampusRooms}/${id}`);
+      var response = await HTTP.get(`${Endpoints.getOnCampusBooking}/${id}`);
       return response.data;
     } catch (e) {
       return e.response.data;
