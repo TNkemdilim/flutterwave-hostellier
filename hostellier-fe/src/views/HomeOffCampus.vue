@@ -14,16 +14,25 @@
 
 <script>
 import HostelCard from "@/components/cards/HostelCard.vue";
+import { OffCampusRooms } from "../services/backendApi/rooms";
 
 export default {
   name: "home-off-campus",
   components: {
     HostelCard
   },
+  created() {
+    this.getRooms();
+  },
   data() {
     return {};
   },
-  methods: {}
+  methods: {
+    getRooms: async function() {
+      let rooms = await OffCampusRooms.getAllOffCampusRooms();
+      console.log(rooms);
+    }
+  }
 };
 </script>
 

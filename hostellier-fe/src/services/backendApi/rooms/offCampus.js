@@ -1,14 +1,15 @@
 import HTTP from "@/helpers/http";
-import * as Endpoints from "../../api/endpoints";
+import * as Endpoints from "../endpoints";
 
 class OffCampusRoomsApi {
   /**
    * Login a student.
    * @param {Object} formData Student data
    */
-  static async getAllOffCampusRooms(formData) {
+  static async getAllOffCampusRooms() {
     try {
-      var response = await HTTP.post(Endpoints.allOffCampusRooms, formData);
+      var response = await HTTP.get(Endpoints.allOffCampusRooms);
+      console.log(response);
       return response.data;
     } catch (e) {
       return e.response.data;

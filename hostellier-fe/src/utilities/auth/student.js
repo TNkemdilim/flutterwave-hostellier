@@ -8,7 +8,6 @@ class Student {
    */
   static isLoggedIn() {
     const studentData = StudentManager.getStudentData();
-    console.log(studentData);
     return !!studentData;
   }
 
