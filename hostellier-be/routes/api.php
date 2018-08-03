@@ -20,12 +20,16 @@ Route::post('auth/student/login', 'Api\V1\AuthController@loginStudent');
 Route::post('auth/student/register', 'Api\V1\AuthController@registerStudent');
 
 /**
+ * 🎉 Authentication & Registration
+ */
+Route::get('/rooms/off-campus', 'Api\V1\RoomController@indexOffCampusRooms');
+Route::get('/rooms/on-campus', 'Api\V1\RoomController@indexOnCampusRooms');
+
+/**
  * 🎉 
  */
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/rooms', 'Api\V1\RoomController@index');
-    Route::get('/rooms/off-campus', 'Api\V1\RoomController@indexOffCampusRooms');
-    Route::get('/rooms/on-campus', 'Api\V1\RoomController@indexOnCampusRooms');
 });
 
 /**
