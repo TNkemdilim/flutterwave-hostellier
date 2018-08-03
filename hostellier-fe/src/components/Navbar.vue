@@ -18,7 +18,7 @@
       </li>
     </ul>
     
-    <ul v-if="loggedIn" class="navbar-nav form-inline my-2 my-lg-0">
+    <ul v-if="isLoggedIn" class="navbar-nav form-inline my-2 my-lg-0">
       <li class="nav-item">
         <a class="text-white">Hello Tochukwu</a>
       </li>
@@ -58,6 +58,7 @@
 <script>
 import LoginModal from "@/components/modals/LoginModal.vue";
 import SignupModal from "@/components/modals/SignupModal.vue";
+// const a = process.env.API_URL;
 
 export default {
   name: "navbar",
@@ -65,12 +66,15 @@ export default {
     LoginModal,
     SignupModal
   },
+  created() {},
   data() {
-    return {
-      loggedIn: true
-    };
+    return {};
   },
-  methods: {}
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    }
+  }
 };
 </script>
 

@@ -1,17 +1,13 @@
-import {
-  setStudentData,
-  clearStudentData,
-  getStudentData
-} from "../dataManager/studentManager";
+import StudentManager from "../dataManager/studentManager";
 
-import StudentAuth from "../auth/student";
+import StudentAuth from "../api/auth/studentAuth";
 
 class Student {
   /**
    * Check if a student is logged in.
    */
   static isLoggedIn() {
-    const studentData = getStudentData();
+    const studentData = StudentManager.getStudentData();
     return !!studentData;
   }
 
@@ -22,7 +18,7 @@ class Student {
   static async login(formData) {
     let response = await StudentAuth.login(formData);
     if (response.status === true) {
-      await setStudentData(response.data);
+      await StudentManager.setStudentData(response.data);
     }
 
     return response.data;
@@ -34,14 +30,14 @@ class Student {
 
   static async updateStudentData(data) {
     if (data.status === true) {
-      await setStudentData(data);
+      await StudentManager.setStudentData(data);
       return true;
     }
     return false;
   }
 
   static logout() {
-    clearStudentData();
+    StudentManager.clearStudentData();
   }
 }
 
