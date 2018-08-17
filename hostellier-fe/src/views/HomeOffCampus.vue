@@ -7,23 +7,35 @@
     <p>All rooms available for rent for students.</p>
     <br><br>
     <div class="ui link cards">
-      <hostel-card v-for="item in [1,2,3,5,6]" :key="item"/>
+      <hostel-card v-for="(room, index) in rooms" :room="room" :key="index"/>
     </div>
   </div>
 </template>
 
 <script>
 import HostelCard from "@/components/cards/HostelCard.vue";
+import { OffCampusRooms } from "../services/backendApi/rooms";
 
 export default {
   name: "home-off-campus",
   components: {
     HostelCard
   },
-  data() {
-    return {};
+  created() {
+    this.getRooms();
   },
-  methods: {}
+  data() {
+    return {
+      rooms: []
+    };
+  },
+  methods: {
+    getRooms: async function() {
+      let roomsResponse = await OffCampusRooms.getAllOffCampusRooms();
+      console.log(roomsResponse.data);
+      this.rooms = roomsResponse.data;
+    }
+  }
 };
 </script>
 

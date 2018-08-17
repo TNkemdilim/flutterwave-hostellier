@@ -5,135 +5,91 @@
         <div class="modal-content">
           <div class="modal-body">
             <div class="col-sm-12 col-md-12 text-center">
-              <h1 class="login-title">Sign in to Hostellier</h1>
+              <h1 class="login-title">Register on Hostellier</h1>
               <p class="login-title-caption">
                 <em>Fatest way to book hostels on and out of campus.</em>
               </p>
               <div class="account-wall">
-                <img class="profile-img" :src="userImage" alt="">
+                <img class="profile-img" :src="'https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120'" alt="">
                 <form class="form-signin">
-                  <input type="text" class="form-control" placeholder="Email" required autofocus>
-                  <input type="password" class="form-control" placeholder="Password" required>
-                  <button class="btn btn-lg btn-primary btn-block" type="submit">
-                    Sign in
-                  </button>
+                  <input type="text" v-model="formData.firstname" class="form-control" placeholder="Firstname" required autofocus>
+                  <input type="text" v-model="formData.lastname" class="form-control" placeholder="Lastname" required>
+                  <select v-model="formData.level" class="form-control form-control-lg" id="inlineFormCustomSelect">
+                    <option value="" selected="selected" disabled >Academic level</option>
+                    <option v-for="(level, index) in [1, 2,3,4]" :key=index :value=level>{{ level * 100}}</option>
+                  </select>
+                  <input v-model="formData.email" type="text" class="form-control" placeholder="Email" required autofocus>
+                  <input v-model="formData.password" type="password" class="form-control" placeholder="Password" required>
+                  <input v-model="formData.c_password" type="password" class="form-control" placeholder="Password Confirmation" required>
+                  
                   <br>
+                  <button @click="registerStudent($event)" class="btn btn-lg btn-primary btn-block">
+                    Register
+                  </button>
                   <label class="checkbox pull-left">
                       <input type="checkbox" value="remember-me">
                       Remember me
                   </label>
                   <br>
-                  <a href="#" class="text-center new-account">Create an account </a>
+                  <a href="#" class="text-center new-account">Login</a>
                 </form>
               </div>
-                <a href="#" class="pull-right need-help">Need help? </a><span class="clearfix"></span>
+                <a data-toggle="modal" data-target="#loginModal" class="pull-right need-help">Need help? </a><span class="clearfix"></span>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <login-modal />
   </div>
 </template>
 
 <script>
 const USER_IMAGE =
   "https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120";
+import LoginModal from "@/components/modals/LoginModal.vue";
+import { StudentAuth } from "../../services/backendApi/auth/index.js";
 
 export default {
   name: "signup-modal",
+  components: {
+    LoginModal
+  },
   data() {
     return {
-      userImage: USER_IMAGE
+      userImage: USER_IMAGE,
+      formData: {
+        email: null,
+        password: null,
+        c_password: null,
+        firstname: null,
+        lastname: null,
+        level: null
+      }
     };
+  },
+  methods: {
+    registerStudent: async function(event) {
+      event.preventDefault();
+      this.$loading("Registering student.");
+      let result = await StudentAuth.register(this.formData);
+
+      this.$loading.close();
+      if (result.status === true) {
+        this.$toasted.success(result.message);
+        this.closeModalNow();
+      } else {
+        this.$toasted.error(result.message);
+      }
+    },
+    closeModalNow: function() {
+      this.closeModal = true;
+    }
   }
 };
 </script>
 
 
 <style lang="scss" scoped>
-#signupModal {
-  background-image: radial-gradient(
-    circle farthest-corner at 10% 20%,
-    rgba(51, 51, 81, 1) 0%,
-    rgba(34, 72, 86, 1) 90%
-  );
-}
-
-.form-signin {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
-}
-.form-signin .form-signin-heading,
-.form-signin .checkbox {
-  margin-bottom: 10px;
-}
-.form-signin .checkbox {
-  font-weight: normal;
-}
-.form-signin .form-control {
-  position: relative;
-  font-size: 16px;
-  height: auto;
-  padding: 10px;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-.form-signin .form-control:focus {
-  z-index: 2;
-}
-.form-signin input[type="text"] {
-  margin-bottom: -1px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-.account-wall {
-  margin-top: 20px;
-  padding: 40px 0px 20px 0px;
-  background-color: #f7f7f7c0;
-  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-}
-
-.modal-content {
-  background-color: transparent;
-  border: none;
-}
-
-.login-title {
-  color: #ffffff;
-  font-size: 18px;
-  font-weight: 400;
-  display: block;
-}
-
-.login-title-caption {
-  color: #ffffff;
-  opacity: 0.5;
-}
-
-.profile-img {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 10px;
-  display: block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-}
-.need-help {
-  display: block;
-  margin-top: 10px;
-  color: #ffffff;
-}
-.new-account {
-  margin-top: 10px;
-}
 </style>
