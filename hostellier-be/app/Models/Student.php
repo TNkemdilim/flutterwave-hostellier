@@ -21,6 +21,7 @@ class Student extends Model
             'firstname' => 'required|string|min:2',
             'lastname' => 'required|string|min:2',
             'level' => ['sometimes', 'required', Rule::in([1, 2, 3, 4, 5])],
+            'course' => 'required|exists:courses,name'
         ];
     }
 
@@ -44,7 +45,7 @@ class Student extends Model
      * @var array
      */
     protected $fillable = [
-        'firstname', 'lastname', 'level', 'user_id'
+        'firstname', 'lastname', 'level', 'user_id', 'course_id',
     ];
 
     /**
@@ -53,7 +54,7 @@ class Student extends Model
      * @var array
      */
     protected $hidden = [
-        'created_at', 'updated_at', 'user_id',
+        'created_at', 'updated_at', 'user_id', 'course_id',
     ];
 
     /**
@@ -76,7 +77,7 @@ class Student extends Model
         return $this->offCampusBookings()
             ->get()
             ->onCampusBookings()
-            ->get(); 
+            ->get();
     }
 
     /**

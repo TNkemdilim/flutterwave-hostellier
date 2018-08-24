@@ -5,6 +5,7 @@ namespace App\Http\Requests\Authentication;
 use App\Utilities\Constants\UserEnum;
 use App\Http\Requests\BaseFormRequest;
 use App\Models\User;
+use App\Models\Course;
 use App\Models\Student;
 use App\Models\UserType;
 
@@ -57,18 +58,22 @@ class RegisterStudentRequest extends BaseFormRequest
                     'user_type_id' => $accountTypeDBId,
                 ]
             );
-        } catch(\Illuminate\Database\QueryException $ex) {
+        } catch (\Illuminate\Database\QueryException $ex) {
             return self::failedJsonResponse('User already exists');
         }
 
         $newStudent = Student::create(
             array_merge(
                 [
-                   'user_id' => $newUser->id,
-                   'firstname' => $this->firstname,
-                   'lastname' => $this->lastname,
+                    'user_id' => $newUser->id,
+                    'firstname' => $this->firstname,
+                    'lastname' => $this->lastname,
+                    'course_id' => Course::where(
+                        'name',
+                        $this->course
+                    )->first()->id
                 ],
-                isset($this->level) ? [ 'level' => $this->level] : []
+                isset($this->level) ? ['level' => $this->level] : []
             )
         );
 
