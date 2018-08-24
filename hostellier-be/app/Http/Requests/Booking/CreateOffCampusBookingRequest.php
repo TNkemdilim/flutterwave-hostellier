@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Booking;
 
-use Flutterwave;
+use App\Integrations\Paystack\Paystack;
 use App\Models\OffCampusRoom;
 use App\Models\StudentOffCampusBooking;
 use App\Http\Requests\BaseFormRequest;
@@ -30,7 +30,7 @@ class CreateOffCampusBookingRequest extends BaseFormRequest
         return [
             'off_campus_room_id' => 'required|numeric',
             'transaction_reference' => 'required|string',
-            'purchase_count' => 'required|numerice|min:1',
+            'purchase_count' => 'required|numeric|min:1',
         ];
     }
 
@@ -41,47 +41,36 @@ class CreateOffCampusBookingRequest extends BaseFormRequest
      */
     public function createBooking()
     {
-        // Improve this later on.
-        $flutterwave = config('flutterwave');
-        $flutterwave = new Flutterwave($flutterwave['PRIVATE_KEY']);
-
-        try
-        {
+        try {
             $roomOfPurchase = OffCampusRoom::findOrFail($this->off_campus_room_id);
+            $transaction = Paystack::verifyTransaction($this->transaction_reference);
+
+            if (is_null($transaction)) {
+                return self::failedJsonResponse("Transaction verification failed.");
+            } else if (($transaction->amount / 100) != ($roomOfPurchase->price * $this->purchase_count)) {
+                // Perform refund
+                return self::failedJsonResponse("Mismatch amount.");
+            }
         } catch (ModelNotFoundException $ex) {
             return self::failedJsonResponse('Invalid Off-campus room specified.');
         }
 
-        try
-        {
-            $transaction = $flutterwave->makePurchase(
-                $roomOfPurchase->price * $this->purchase_count, 
-                "PURCHASED OFF-CAMPUS ROOM WITH ID: {$roomOfPurchase->id} 
-                AT PRICE OF N{$roomOfPurchase->price}"
-            );
+        StudentOffCampusBooking::create(
+            [
+                'student_id' => auth()->user()->student()->first()->id,
+                'off_campus_room_id' => $roomOfPurchase->id,
+                'transaction_reference' => $this->transaction_reference,
+                'expiring_at' => date(
+                    'Y-m-d H:m:s',
+                    strtotime("+{$this->purchase_count} year")
+                )
+            ]
+        );
+        $roomOfPurchase->update(['booked' => true]);
 
-            StudentOffCampusBooking::create(
-                [
-                    'student_id' => auth()->user()->student()->first()->id,
-                    'off_campus_room_id' => $roomOfPurchase->id,
-                    'transaction_reference' => $transaction['transaction_reference'],
-                    'expiring_at' => $this->purchase_count // fix this by properly adding the months in advance
-                ]
-            );
-
-            $roomOfPurchase->update(['booked' => true]);
-
-            return self::successResponseJson(
-                'Successfully booked off-campus room.',
-                $roomOfPurchase
-            );
-
-        } catch (\Exception $ex)
-        {
-            // TO DO:
-            // Return custom error message, to prevent returning crucial 
-            // message back to client.
-            return self::failureResponseJson($ex->getMessage());
-        }
+        return self::successJsonResponse(
+            'Successfully booked off-campus room.',
+            $roomOfPurchase
+        );
     }
 }

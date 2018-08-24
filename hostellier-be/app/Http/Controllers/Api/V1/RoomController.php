@@ -80,7 +80,7 @@ class RoomController extends Controller
      */
     public function createOnCampusRoom(CreateOnCampusRoomRequest $request)
     {
-        
+
         return $request->createRoom();
     }
 
@@ -135,7 +135,8 @@ class RoomController extends Controller
      * @return \Illuminate\Http\Response 
      */
     public function updateOffCampusRoom(
-        UpdateOffCampusRoomRequest $request, OffCampusRoom $room
+        UpdateOffCampusRoomRequest $request,
+        OffCampusRoom $room
     ) {
         return $request->updateRoom($room);
     }
@@ -149,7 +150,8 @@ class RoomController extends Controller
      * @return \Illuminate\Http\Response 
      */
     public function updateOnCampusRoom(
-        UpdateOnCampusRoomRequest $request, OnCampusRoom $room
+        UpdateOnCampusRoomRequest $request,
+        OnCampusRoom $room
     ) {
         return $request->updateRoom($room);
     }
