@@ -15,7 +15,7 @@ class CreateStudentOffCampusBookingsTable extends Migration
     {
         Schema::create('student_off_campus_bookings', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('student_id')->unique()->unsigned();
+            $table->integer('student_id')->unsigned();
             $table->integer('off_campus_room_id')->unsigned();
             $table->string('transaction_reference');
             $table->datetime('expiring_at');
