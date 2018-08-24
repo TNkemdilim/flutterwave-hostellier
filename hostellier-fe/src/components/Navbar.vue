@@ -26,15 +26,15 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="icon user big circle"></i>
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+          <router-link class="dropdown-item" to="/me/bookings">
             <i class="icon warehouse"></i>
             My Bookings
-          </a>
-          <a class="dropdown-item" href="#">
+          </router-link>
+          <router-link class="dropdown-item" to="/me">
             <i class="icon user"></i>
             Profile
-          </a>
+          </router-link>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">
             <i class="icon sign-out"></i>
