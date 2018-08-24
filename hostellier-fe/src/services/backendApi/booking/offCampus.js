@@ -1,16 +1,23 @@
 import HTTP from "@/helpers/http";
-import * as Endpoints from "../../api/endpoints";
+import * as Endpoints from "../endpoints";
 
 class OffCampusBookingApi {
+  _authToken = null;
+
+  constructor(authToken) {
+    this._authToken = authToken;
+  }
+
   /**
    * Get all room that exist.
    * @param {Object} formData Student data
    */
-  static async createOffCampusBooking(formData) {
+  async createOffCampusBooking(formData) {
     try {
       var response = await HTTP.post(
         Endpoints.createOffCampusBooking,
-        formData
+        formData,
+        this._authToken
       );
       return response.data;
     } catch (e) {
@@ -19,10 +26,10 @@ class OffCampusBookingApi {
   }
 
   /**
-   * Login a student.
+   * Get booking by Id.
    * @param {Object} formData Student data
    */
-  static async getOffCampusBookingById(id) {
+  async getOffCampusBookingById(id) {
     try {
       var response = await HTTP.get(`${Endpoints.getOffCampusBooking}/${id}`);
       return response.data;

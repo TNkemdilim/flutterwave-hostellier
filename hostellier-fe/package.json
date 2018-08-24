@@ -23,7 +23,8 @@
     "popper.js": "^1.14.3",
     "semantic-ui-css": "^2.3.3",
     "semantic-ui-vue": "^0.2.11",
-    "vue": "^2.5.16",
+    "vue": "^2.5.17",
+    "vue-paystack": "^1.0.2",
     "vue-router": "^3.0.1",
     "vue-sweetalert2": "^1.5.2",
     "vue-timeago": "^5.0.0",
@@ -44,7 +45,7 @@
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
     "vue-gh-pages": "^1.16.3",
-    "vue-template-compiler": "^2.5.16"
+    "vue-template-compiler": "^2.5.17"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

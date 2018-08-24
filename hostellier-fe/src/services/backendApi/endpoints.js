@@ -15,4 +15,4 @@ export const createOnCampusBooking = `${enpointVersion}/booking/off-campus`;
 
 // Booking (Off-Campus)
 export const getOffCampusBooking = `${enpointVersion}/booking/on-campus`;
-export const createOffCampusBooking = `${enpointVersion}/booking/on-campus`;
+export const createOffCampusBooking = `${enpointVersion}/booking/off-campus`;

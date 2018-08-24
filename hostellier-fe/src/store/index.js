@@ -9,7 +9,9 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    loggedIn: false
+    loggedIn: false,
+    user: null,
+    userToken: null
   },
   getters,
   mutations,

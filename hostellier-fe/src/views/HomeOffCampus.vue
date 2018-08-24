@@ -7,7 +7,7 @@
     <p>All rooms available for rent for students.</p>
     <br><br>
     <div class="ui link cards">
-      <hostel-card v-for="(room, index) in rooms" :room="room" :key="index"/>
+      <hostel-card v-for="(room, index) in rooms" @booked="deleteRoom(room)" :room="room" :key="index"/>
     </div>
   </div>
 </template>
@@ -32,8 +32,14 @@ export default {
   methods: {
     getRooms: async function() {
       let roomsResponse = await OffCampusRooms.getAllOffCampusRooms();
-      console.log(roomsResponse.data);
       this.rooms = roomsResponse.data;
+    },
+
+    deleteRoom: function(room) {
+      let selectedIndex = this.rooms.findIndex(x => x.id === room.id);
+      if (selectedIndex > 0) {
+        this.rooms.splice(selectedIndex, 1);
+      }
     }
   }
 };

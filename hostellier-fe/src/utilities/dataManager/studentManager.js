@@ -3,6 +3,18 @@ const STUDENT_DATA = process.env.VUE_APP_STUDENT_DATA;
 
 class Student {
   /**
+   * Retrieves the auth token for student.
+   */
+  static getStudentToken() {
+    let data = Student.getStudentData();
+    if (data != null) {
+      return data.token !== null ? data.token : null;
+    }
+
+    return null;
+  }
+
+  /**
    * Retrieves a students data from local storage.
    */
   static getStudentData() {

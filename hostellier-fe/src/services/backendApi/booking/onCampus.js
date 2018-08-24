@@ -1,14 +1,24 @@
 import HTTP from "@/helpers/http";
-import * as Endpoints from "../../api/endpoints";
+import * as Endpoints from "../endpoints";
 
 class OnCampusBookingApi {
+  _authToken = null;
+
+  constructor(authToken) {
+    this._authToken = authToken;
+  }
+
   /**
    * Login a student.
    * @param {Object} formData Student data
    */
   static async createOnCampusBooking(formData) {
     try {
-      var response = await HTTP.post(Endpoints.createOnCampusBooking, formData);
+      var response = await HTTP.post(
+        Endpoints.createOnCampusBooking,
+        formData,
+        this._authToken
+      );
       return response.data;
     } catch (e) {
       return e.response.data;
