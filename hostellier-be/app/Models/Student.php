@@ -81,6 +81,31 @@ class Student extends Model
     }
 
     /**
+     * Get the course of the student.
+     *
+     * @return void
+     */
+    public function course()
+    {
+        return $this->belongsTo('App\Models\Course');
+    }
+
+    /**
+     * Get the on-campus rooms available to this student based 
+     * on course of study.
+     *
+     * @return void
+     */
+    public function availableOnCampusRooms()
+    {
+        return $this->course()
+            ->first()
+            ->onCampusRooms()
+            ->where('booked', false)
+            ->get();
+    }
+
+    /**
      * Get all off-campus rooms purchased by student.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

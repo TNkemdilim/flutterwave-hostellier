@@ -71,12 +71,13 @@ class User extends Authenticatable
     {
         if (!$this->isStudent()) {
             // Replace this with a throwing of custom exception.
-            return response()->json(
-                [
-                    'status' => false,
-                    'message' => 'User is not a student'
-                ]
-            );
+            // return response()->json(
+            //     [
+            //         'status' => false,
+            //         'message' => 'User is not a student'
+            //     ]
+            // );
+            return null;
         }
 
         return $this->hasOne('App\Models\Student');

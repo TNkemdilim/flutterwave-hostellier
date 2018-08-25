@@ -36,7 +36,7 @@ Route::group(['middleware' => 'auth:api'], function () {
  */
 Route::group(['middleware' => ['auth:api', 'api.student']], function () {
     // Rooms
-    Route::get('/rooms/on-campus', 'Api\V1\RoomController@indexOnCampusRooms');
+    Route::get('/rooms/on-campus', 'Api\V1\RoomController@indexOnCampusRoomsForStudent');
     
     // Student Profile
     Route::get('/me', 'Api\V1\StudentController@showProfile');

@@ -19,11 +19,16 @@ class RoomController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
+        $onCampusRooms = $user->isStudent()
+            ? $user->student()->first()->availableOnCampusRooms()
+            : OnCampusRoom::where('booked', false)->get();
+
         // Todo: Optimize query by utilizing in-built `chunk(...)` method.
         return self::successJsonResponse(
             'Successfully retrieved all rooms',
             [
-                'on_campus' => OnCampusRoom::where('booked', false)->get(),
+                'on_campus' => $onCampusRooms,
                 'off_campus' => OffCampusRoom::where('booked', false)->get()
             ]
         );
@@ -56,6 +61,23 @@ class RoomController extends Controller
         return self::successJsonResponse(
             'Successfully retrieved all on-campus rooms',
             OnCampusRoom::where('booked', false)->get()
+        );
+    }
+
+    /**
+     * Get all on-campus bookings available for the currently 
+     * logged in student.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexOnCampusRoomsForStudent()
+    {
+        // Todo: 
+        // 1. Optimize query by utilizing in-built `chunk(...)` method.
+        // 2. Return rooms available for a specific course of study.
+        return self::successJsonResponse(
+            'Successfully retrieved all on-campus rooms',
+            auth()->user()->student()->first()->availableOnCampusRooms()
         );
     }
 

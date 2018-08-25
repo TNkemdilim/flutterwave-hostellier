@@ -21,6 +21,6 @@ class OnCampusRoomAllowedCourses extends Model
      * @var array
      */
     protected $hidden = [
-        'created_at', 'updated_at', 'on_campus_room_id', 'course_id',
+        'created_at', 'updated_at', 'on_campus_room_id',
     ];
 }

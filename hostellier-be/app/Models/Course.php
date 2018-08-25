@@ -30,4 +30,30 @@ class Course extends Model
     protected $hidden = [
         'created_at', 'updated_at',
     ];
+
+    /**
+     * Retrieves the available on-campus rooms available for 
+     * students of this course.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function onCampusRooms()
+    {
+        return $this->belongsToMany(
+            'App\Models\OnCampusRoom',
+            'on_campus_room_allowed_courses',
+            'course_id',
+            'on_campus_room_id'
+        );
+    }
+
+    /**
+     * Retrieves students offereing this course of study.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function students()
+    {
+        return $this->hasMany('App\Models\Student');
+    }
 }

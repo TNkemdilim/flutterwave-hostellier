@@ -50,7 +50,7 @@ class OnCampusRoom extends Model
      * @var array
      */
     protected $hidden = [
-        'created_at', 'updated_at',
+        'created_at', 'updated_at', 'pivot',
     ];
 
     /**
@@ -61,7 +61,7 @@ class OnCampusRoom extends Model
     public function students()
     {
         $this->hasManyThrough(
-            'App\Models\Student', 
+            'App\Models\Student',
             'App\Models\StudentOnCampusBooking',
             'on_campus_room_id',
             'student_id'
