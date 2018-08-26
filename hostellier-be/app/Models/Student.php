@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Validation\Rule;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\OnCampusRoom;
 
 class Student extends Model
 {
@@ -21,6 +22,7 @@ class Student extends Model
             'firstname' => 'required|string|min:2',
             'lastname' => 'required|string|min:2',
             'level' => ['sometimes', 'required', Rule::in([1, 2, 3, 4, 5])],
+            'course' => 'required|exists:courses,name'
         ];
     }
 
@@ -44,7 +46,7 @@ class Student extends Model
      * @var array
      */
     protected $fillable = [
-        'firstname', 'lastname', 'level', 'user_id'
+        'firstname', 'lastname', 'level', 'user_id', 'course_id',
     ];
 
     /**
@@ -53,7 +55,7 @@ class Student extends Model
      * @var array
      */
     protected $hidden = [
-        'created_at', 'updated_at', 'user_id',
+        'created_at', 'updated_at', 'user_id', 'course_id',
     ];
 
     /**
@@ -76,7 +78,32 @@ class Student extends Model
         return $this->offCampusBookings()
             ->get()
             ->onCampusBookings()
-            ->get(); 
+            ->get();
+    }
+
+    /**
+     * Get the course of the student.
+     *
+     * @return void
+     */
+    public function course()
+    {
+        return $this->belongsTo('App\Models\Course');
+    }
+
+    /**
+     * Get the on-campus rooms available to this student based 
+     * on course of study.
+     *
+     * @return void
+     */
+    public function availableOnCampusRooms()
+    {
+        return $this->course()
+            ->first()
+            ->onCampusRooms()
+            ->where('booked', false)
+            ->get();
     }
 
     /**
@@ -97,5 +124,18 @@ class Student extends Model
     public function onCampusBookings()
     {
         return $this->hasMany('App\Models\StudentOnCampusBooking');
+    }
+
+    /**
+     * Check if a student has previously booken an on-campus room.
+     *
+     * @return Boolean
+     */
+    public function hasBookedOnCampusRoom()
+    {
+        returnOnCampusRoom::where(
+            'student_id',
+            $this->id
+        )->where('booked', false)->count() > 0;
     }
 }

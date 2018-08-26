@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/
+ */
 
 /**
  * 🎉 Authentication & Registration
@@ -20,10 +20,9 @@ Route::post('auth/student/login', 'Api\V1\AuthController@loginStudent');
 Route::post('auth/student/register', 'Api\V1\AuthController@registerStudent');
 
 /**
- * 🎉 Authentication & Registration
+ * 🎉 
  */
 Route::get('/rooms/off-campus', 'Api\V1\RoomController@indexOffCampusRooms');
-Route::get('/rooms/on-campus', 'Api\V1\RoomController@indexOnCampusRooms');
 
 /**
  * 🎉 
@@ -36,6 +35,9 @@ Route::group(['middleware' => 'auth:api'], function () {
  * 🎉 
  */
 Route::group(['middleware' => ['auth:api', 'api.student']], function () {
+    // Rooms
+    Route::get('/rooms/on-campus', 'Api\V1\RoomController@indexOnCampusRoomsForStudent');
+    
     // Student Profile
     Route::get('/me', 'Api\V1\StudentController@showProfile');
     Route::post('/me', 'Api\V1\StudentController@index'); // not yet tested
@@ -44,7 +46,7 @@ Route::group(['middleware' => ['auth:api', 'api.student']], function () {
     Route::get('/me/booking', 'Api\V1\StudentController@getAllBookings');
     Route::get('/me/booking/off-campus', 'Api\V1\StudentController@getAllOffCampusBookings');
     Route::get('/me/booking/on-campus', 'Api\V1\StudentController@getAllOnCampusBookings');
-    
+
     Route::post('/booking/off-campus', 'Api\V1\BookingController@createOffCampusBooking');
     Route::post('/booking/on-campus', 'Api\V1\BookingController@createOnCampusBooking');
 });

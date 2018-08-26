@@ -5,6 +5,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Utilities\Constants\UserEnum;
 use Laravel\Passport\HasApiTokens;
+use App\Models\StudentOnCampusBooking;
 
 class User extends Authenticatable
 {
@@ -71,14 +72,28 @@ class User extends Authenticatable
     {
         if (!$this->isStudent()) {
             // Replace this with a throwing of custom exception.
-            return response()->json(
-                [
-                    'status' => false,
-                    'message' => 'User is not a student'
-                ]
-            );
+            // return response()->json(
+            //     [
+            //         'status' => false,
+            //         'message' => 'User is not a student'
+            //     ]
+            // );
+            return null;
         }
 
         return $this->hasOne('App\Models\Student');
+    }
+
+    /**
+     * Check if a student user has previously booked an on-campus room.
+     *
+     * @return Boolean
+     */
+    public function hasBookedOnCampusRoom()
+    {
+        return StudentOnCampusBooking::where(
+            'student_id',
+            $this->student()->first()->id
+        )->count() > 0;
     }
 }

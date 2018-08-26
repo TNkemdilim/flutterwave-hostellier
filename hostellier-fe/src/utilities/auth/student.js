@@ -12,6 +12,23 @@ class Student {
   }
 
   /**
+   * Retrieves the bearer token header for the student.
+   */
+  static getBearerHeader() {
+    let studentAuthToken = StudentManager.getStudentToken();
+    if (studentAuthToken === null) {
+      return null;
+    }
+
+    var Header = {
+      headers: {
+        Authorization: `Bearer ${studentAuthToken}`
+      }
+    };
+    return Header;
+  }
+
+  /**
    * Login a student.
    * @param {Object} formData Student data
    */

@@ -41,7 +41,7 @@ const USER_IMAGE =
 
 import StudentAuth from "../../utilities/auth/student";
 // import router from "../../helpers/routing";
-import { UPDATE_LOGIN_STATUS } from "../../store/mutation-types";
+import { UPDATE_LOGIN_STATUS } from "@/store/mutation-types";
 
 export default {
   name: "login-modal",
