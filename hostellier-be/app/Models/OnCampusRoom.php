@@ -40,6 +40,7 @@ class OnCampusRoom extends Model
         'description',
         'price',
         'students_per_room',
+        'occupants_count',
         'picture',
         'booked',
     ];

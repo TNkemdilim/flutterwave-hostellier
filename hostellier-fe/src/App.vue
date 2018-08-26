@@ -1,19 +1,21 @@
 <template>
   <div id="app">
-    <navbar />
-    <router-view/>
+    <navbar/>
+    <router-view id="content"/>
+    <inverted-footer />
   </div>
 </template>
 
 <script>
-import Navbar from "@/components/Navbar.vue";
+import { Navbar, Footer } from "@/components";
 import StudentAuth from "@/utilities/auth/student";
 import StudentManager from "@/utilities/dataManager/studentManager";
 import * as types from "@/store/mutation-types.js";
 
 export default {
   components: {
-    Navbar
+    Navbar,
+    "inverted-footer": Footer
   },
   created() {
     let userData = StudentManager.getStudentData();

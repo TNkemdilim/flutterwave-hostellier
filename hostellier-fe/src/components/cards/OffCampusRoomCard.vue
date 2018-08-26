@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="image">
-      <img style="height: 200px;" :src="hostelImage">
+      <img style="height: 200px;" :src="room.picture">
     </div>
     <div class="content">
       <div class="header">{{room.title}}</div>
@@ -16,6 +16,7 @@
       <span class="right floated">
         <!-- <button class="ui primary button">Purchase ₦ {{room.price * 1000 | parseToDecimal}}</button> -->
         <paystack
+            v-if="!hidePaymentButton"
             :amount="room.price * 100"
             :email="user.email"
             :paystackkey=PAYSTACK_KEY
@@ -37,34 +38,44 @@
 </template>
 
 <script>
-import HostelImage from "../../assets/img/hostel.jpg";
-import Student from "@/utilities/auth/student";
-import { OffCampusBooking } from "@/services/backendApi/booking";
 import paystack from "vue-paystack";
+import Student from "@/utilities/auth/student";
+import { parseToDecimal } from "@/helpers/maths";
+import { trimTo160Characters } from "@/helpers/strings";
+import { OffCampusBooking } from "@/services/backendApi/booking";
+import { generateRandomReferenceHash } from "@/helpers/encryption";
 
 const OffCampusBookingApi = new OffCampusBooking(Student.getBearerHeader());
 const PAYSTACK_KEY = process.env.VUE_APP_PAYSTACK_PUBLIC_KEY;
 
 export default {
   name: "hostel-card",
-  props: ["room"],
+  props: ["room", "hidePaymentButton"],
   created() {},
   components: {
     paystack
   },
   data() {
     return {
-      hostelImage: HostelImage,
       PAYSTACK_KEY
     };
   },
-  methods: {
-    trimTo160Characters: function(s) {
-      return s.substr(0, 160) + "...";
+  computed: {
+    user() {
+      return this.$store.getters.user;
     },
 
-    parseToDecimal: function(value) {
-      return parseFloat(value).toFixed(2);
+    reference() {
+      return generateRandomReferenceHash();
+    }
+  },
+  methods: {
+    trimTo160Characters: function(string) {
+      return trimTo160Characters(string);
+    },
+
+    parseToDecimal: function(string) {
+      return parseToDecimal(string);
     },
 
     callback: async function(response) {
@@ -87,22 +98,6 @@ export default {
     },
 
     close: function() {}
-  },
-  computed: {
-    user() {
-      return this.$store.getters.user;
-    },
-
-    reference() {
-      let text = "";
-      let possible =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-      for (let i = 0; i < 10; i++)
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-      return text;
-    }
   }
 };
 </script>

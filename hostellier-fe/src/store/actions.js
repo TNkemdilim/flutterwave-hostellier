@@ -9,3 +9,9 @@ export const setUser = ({ commit }, payload) => {
 export const setUserToken = ({ commit }, payload) => {
   commit(types.USER_TOKEN, payload);
 };
+export const setTotalOffCampusRoomsBooked = ({ commit }, payload) => {
+  commit(types.TOTAL_OFF_CAMPUS_ROOMS_BOOKED, payload);
+};
+export const setTotalOnCampusRoomsBooked = ({ commit }, payload) => {
+  commit(types.TOTAL_ON_CAMPUS_ROOMS_BOOKED, payload);
+};

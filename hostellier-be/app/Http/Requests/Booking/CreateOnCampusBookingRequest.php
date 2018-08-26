@@ -31,8 +31,49 @@ class CreateOnCampusBookingRequest extends BaseFormRequest
         return [
             'on_campus_room_id' => 'required|numeric',
             'transaction_reference' => 'required|string',
-            'purchase_count' => 'required|numerice|min:1',
         ];
+    }
+
+
+    /**
+     * Creates a booking for student.
+     * 
+     * @param Integer $onCampusRoomId  
+     * @param String $txRef  
+     * 
+     * @return void
+     */
+    private function _createBookingForStudent($studentId, $onCampusRoomId, $txRef)
+    {
+        StudentOnCampusBooking::create(
+            [
+                'student_id' => $studentId,
+                'on_campus_room_id' => $onCampusRoomId,
+                'transaction_reference' => $txRef,
+                'expiring_at' => date('Y-m-d H:m:s', strtotime("+1 year"))
+            ]
+        );
+    }
+
+    /**
+     * Verify that the payment status corresponds with given price.
+     *
+     * @param String $transactionReference 
+     * 
+     * @return void
+     */
+    private function _verifyPaymentStatus($transactionReference, $roomPrice)
+    {
+        $transaction = Paystack::verifyTransaction($transactionReference);
+
+        if (is_null($transaction)) {
+            return self::failedJsonResponse("Transaction verification failed.");
+        } else if ($transaction->amount != ($roomPrice)) {
+            // Perform refund
+            return self::failedJsonResponse("Mismatch amount.");
+        }
+
+        return true;
     }
 
     /**
@@ -42,39 +83,42 @@ class CreateOnCampusBookingRequest extends BaseFormRequest
      */
     public function createBooking()
     {
+        if (auth()->user()->hasBookedOnCampusRoom()) {
+            return self::failedJsonResponse(
+                'Sorry, you currently have an active room on-campus.'
+            );
+        }
+
         try {
             $roomOfPurchase = OnCampusRoom::findOrFail($this->on_campus_room_id);
 
-            if (++$roomOfPurchase->current_no_of_occupants > $roomOfPurchase->students_per_room) {
+            if (++$roomOfPurchase->no_of_occupants > $roomOfPurchase->students_per_room) {
                 throw new RoomFilledException();
-            } else if ($roomOfPurchase->current_no_occupants == $roomOfPurchase->students_per_room) {
-                $roomOfPurchase->booked == true;
+            } else if ($roomOfPurchase->no_of_occupants == $roomOfPurchase->students_per_room) {
+                $roomOfPurchase->booked = true;
             }
 
-            $transaction = Paystack::verifyTransaction($this->transaction_reference);
-            if (is_null($transaction)) {
-                return self::failedJsonResponse("Transaction verification failed.");
-            } else if ($transaction->amount != ($roomOfPurchase->price * $this->purchase_count)) {
-                // Perform refund
-                return self::failedJsonResponse("Mismatch amount.");
+            $paymentStatus = $this->_verifyPaymentStatus(
+                $this->transaction_reference,
+                $roomOfPurchase->price
+            );
+            if (!$paymentStatus) {
+                return $paymentStatus;
             }
         } catch (ModelNotFoundException $ex) {
             return self::failedJsonResponse('Invalid on-campus room specified.');
         } catch (RoomFilledException $ex) {
-            return self::failedJsonResponse("The selected room you specified isn't vacant.");
+            return self::failedJsonResponse('The selected room you specified isn\' t vacant . ');
         }
 
-        StudentOnCampusBooking::create(
-            [
-                'student_id' => auth()->user()->student()->first()->id,
-                'on_campus_room_id' => $roomOfPurchase->id,
-                'transaction_reference' => $this->transaction_reference,
-                'expiring_at' => $this->purchase_count // fix this by properly adding the months in advance
-            ]
+        $this->_createBookingForStudent(
+            auth()->user()->student()->first()->id,
+            $roomOfPurchase->id,
+            $this->transaction_reference
         );
 
         $roomOfPurchase->save(); // updates booking status.
-        return self::successResponseJson(
+        return self::successJsonResponse(
             'Successfully booked off-campus room.',
             $roomOfPurchase
         );

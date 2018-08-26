@@ -7,7 +7,6 @@
 
 <script type="text/javascript">
 export default {
-  name: "paystack-button",
   props: {
     embed: {
       type: Boolean,
@@ -31,11 +30,13 @@ export default {
     },
     callback: {
       type: Function,
-      required: true
+      required: true,
+      default: function() {}
     },
     close: {
       type: Function,
-      required: true
+      required: true,
+      default: function() {}
     },
     metadata: {
       type: Object,
@@ -70,7 +71,16 @@ export default {
   },
   computed: {
     scriptLoaded: function() {
-      return this.loadScript(() => {});
+      /**
+       * TODO:
+       * Find a fix to move promise away from computed
+       **/
+      /* eslint-disable vue/no-async-in-computed-properties */
+      return new Promise(resolve => {
+        this.loadScript(() => {
+          resolve();
+        });
+      });
     }
   },
   mounted() {

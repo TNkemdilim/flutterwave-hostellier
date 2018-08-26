@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Validation\Rule;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\OnCampusRoom;
 
 class Student extends Model
 {
@@ -123,5 +124,18 @@ class Student extends Model
     public function onCampusBookings()
     {
         return $this->hasMany('App\Models\StudentOnCampusBooking');
+    }
+
+    /**
+     * Check if a student has previously booken an on-campus room.
+     *
+     * @return Boolean
+     */
+    public function hasBookedOnCampusRoom()
+    {
+        returnOnCampusRoom::where(
+            'student_id',
+            $this->id
+        )->where('booked', false)->count() > 0;
     }
 }

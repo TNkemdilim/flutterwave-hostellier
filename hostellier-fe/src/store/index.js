@@ -11,7 +11,13 @@ export default new Vuex.Store({
   state: {
     loggedIn: false,
     user: null,
-    userToken: null
+    userToken: null,
+    student: {
+      bookings: {
+        totalOffCampusRoomsBooked: 0,
+        totalOnCampusRoomsBooked: 0
+      }
+    }
   },
   getters,
   mutations,

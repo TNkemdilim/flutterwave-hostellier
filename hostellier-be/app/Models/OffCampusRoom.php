@@ -34,14 +34,14 @@ class OffCampusRoom extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 
-        'city', 
-        'state', 
-        'country', 
+        'title',
+        'city',
+        'state',
+        'country',
         'description',
-        'price', 
+        'price',
         'picture',
-        'booked', 
+        'booked',
     ];
 
     /**

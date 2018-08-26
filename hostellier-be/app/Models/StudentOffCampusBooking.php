@@ -47,6 +47,16 @@ class StudentOffCampusBooking extends Model
      */
     public function roomDetails()
     {
-        $this->belongsToOne('App\Models\OffCampusRoom', 'off_campus_room_id');
+        return $this->belongsTo('App\Models\OffCampusRoom', 'off_campus_room_id');
+    }
+
+    /**
+     * Get the room details of the current booking.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function room()
+    {
+        return $this->belongsTo('App\Models\OffCampusRoom', 'off_campus_room_id');
     }
 }

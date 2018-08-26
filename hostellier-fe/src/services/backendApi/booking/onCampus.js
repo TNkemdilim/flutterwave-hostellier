@@ -12,7 +12,7 @@ class OnCampusBookingApi {
    * Login a student.
    * @param {Object} formData Student data
    */
-  static async createOnCampusBooking(formData) {
+  async createOnCampusBooking(formData) {
     try {
       var response = await HTTP.post(
         Endpoints.createOnCampusBooking,

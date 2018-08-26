@@ -31,7 +31,7 @@ class StudentController extends Controller
      * 
      * @return Object
      */
-    protected function user() 
+    protected function user()
     {
         return auth()->user();
     }
@@ -79,7 +79,12 @@ class StudentController extends Controller
 
         return self::successJsonResponse(
             'Successfully retrieved student\'s off-campus bookings.',
-            [ 'bookings' => $student->offCampusBookings()->get()->toArray() ]
+            [
+                'bookings' => $student->offCampusBookings()
+                    ->with(['roomDetails'])
+                    ->get()
+                    ->toArray()
+            ]
         );
     }
 
@@ -94,7 +99,7 @@ class StudentController extends Controller
 
         return self::successJsonResponse(
             'Successfully retrieved student\'s off-campus bookings.',
-            [ 'bookings' => $student->offCampusBookings()->get()->toArray() ]
+            ['bookings' => $student->offCampusBookings()->get()->toArray()]
         );
     }
 }
