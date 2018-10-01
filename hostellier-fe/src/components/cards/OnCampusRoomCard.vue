@@ -33,7 +33,7 @@
               class="ui right floated green button"
           >
             <i class="icon cart"></i>
-            Purchase for ${{ room.price }}
+            Purchase for N{{ room.price }}
           </paystack-button>
         </div>
       </div>
