@@ -1,4 +1,4 @@
-# Flutterwave-hostellier
+# Hostellier
 
 ## Project Structure
 This project is structured in a statless format:
