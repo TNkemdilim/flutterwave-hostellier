@@ -24,7 +24,7 @@
             :callback="callback"
             :close="close"
             :embed="false"
-            :text="'Purchase $' +  parseToDecimal(room.price)"
+            :text="'Purchase N' +  parseToDecimal(room.price)"
             class="ui primary button"
         >
         </paystack>

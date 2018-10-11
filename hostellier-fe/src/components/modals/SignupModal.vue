@@ -18,6 +18,10 @@
                     <option value="" selected="selected" disabled >Academic level</option>
                     <option v-for="(level, index) in [1, 2,3,4]" :key=index :value=level>{{ level * 100}}</option>
                   </select>
+                  <select v-model="formData.course" class="form-control form-control-lg" id="inlineFormCustomSelect">
+                    <option value="" selected="selected" disabled>Course</option>
+                    <option v-for="(course, index) in COURSES" :key=index :value=course>{{ course }}</option>
+                  </select>
                   <input v-model="formData.email" type="text" class="form-control" placeholder="Email" required autofocus>
                   <input v-model="formData.password" type="password" class="form-control" placeholder="Password" required>
                   <input v-model="formData.c_password" type="password" class="form-control" placeholder="Password Confirmation" required>
@@ -50,6 +54,7 @@ const USER_IMAGE =
   "https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120";
 import LoginModal from "@/components/modals/LoginModal.vue";
 import { StudentAuth } from "../../services/backendApi/auth/index.js";
+import { COURSES } from "../../data/";
 
 export default {
   name: "signup-modal",
@@ -65,8 +70,10 @@ export default {
         c_password: null,
         firstname: null,
         lastname: null,
-        level: null
-      }
+        level: null,
+        course: null
+      },
+      COURSES
     };
   },
   methods: {

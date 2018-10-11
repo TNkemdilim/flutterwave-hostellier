@@ -14,6 +14,7 @@ class AddCourseForStudent extends Migration
     public function up()
     {
         Schema::table('students', function (Blueprint $table) {
+            $table->integer('course_id')->unsigned();
             $table->foreign('course_id')
                 ->references('id')
                 ->on('courses');

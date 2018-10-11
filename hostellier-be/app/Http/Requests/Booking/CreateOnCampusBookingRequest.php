@@ -108,7 +108,7 @@ class CreateOnCampusBookingRequest extends BaseFormRequest
         } catch (ModelNotFoundException $ex) {
             return self::failedJsonResponse('Invalid on-campus room specified.');
         } catch (RoomFilledException $ex) {
-            return self::failedJsonResponse('The selected room you specified isn\' t vacant . ');
+            return self::failedJsonResponse('The selected room you specified isn\'t vacant . ');
         }
 
         $this->_createBookingForStudent(
