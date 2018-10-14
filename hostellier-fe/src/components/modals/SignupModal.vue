@@ -14,11 +14,11 @@
                 <form class="form-signin">
                   <input type="text" v-model="formData.firstname" class="form-control" placeholder="Firstname" required autofocus>
                   <input type="text" v-model="formData.lastname" class="form-control" placeholder="Lastname" required>
-                  <select v-model="formData.level" class="form-control form-control-lg" id="inlineFormCustomSelect">
+                  <select v-model="formData.level" class="form-control form-control-lg" id="level">
                     <option value="" selected="selected" disabled >Academic level</option>
                     <option v-for="(level, index) in [1, 2,3,4]" :key=index :value=level>{{ level * 100}}</option>
                   </select>
-                  <select v-model="formData.course" class="form-control form-control-lg" id="inlineFormCustomSelect">
+                  <select v-model="formData.course" class="form-control form-control-lg" id="course">
                     <option value="" selected="selected" disabled>Course</option>
                     <option v-for="(course, index) in COURSES" :key=index :value=course>{{ course }}</option>
                   </select>
