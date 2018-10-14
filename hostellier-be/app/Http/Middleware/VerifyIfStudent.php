@@ -7,7 +7,7 @@ use Closure;
 class VerifyIfStudent
 {
     /**
-     * Handle an incoming request.
+     * Validates if a user is a student.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
@@ -20,7 +20,8 @@ class VerifyIfStudent
                 [
                     'status' => false,
                     'message' => 'Sorry, you are not a student.',
-                ], 401
+                ],
+                401
             );
         }
         return $next($request);

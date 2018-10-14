@@ -6,6 +6,7 @@ use App\Models\OffCampusRoom;
 use App\Models\OnCampusRoom;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Room\DeleteRoomRequest;
 use App\Http\Requests\Room\CreateOffCampusRoomRequest;
 use App\Http\Requests\Room\CreateOnCampusRoomRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -185,38 +186,20 @@ class RoomController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    public function destroyOffCampusRoom(OffCampusRoom $room)
+    public function destroyOffCampusRoom(DeleteRoomRequest $request, int $id)
     {
-        try {
-            return successJsonResponse(
-                'Successfully deleted off-campus room.',
-                OffCampus::findOrFail($room->id)->delete()
-            );
-        } catch (ModelNotFoundException $ex) {
-            return failedJsonResponse(
-                'The specified off-campus room doesn\'t exist.'
-            );
-        }
+        return $request->deleteOffCampusRoom($id);
     }
 
     /**
      * Delete the specified off-campus room.
      *
-     * @param App\Models\OffCampusRoom $room 
+     * @param App\Models\OnCampusRoom $room 
      * 
      * @return \Illuminate\Http\Response
      */
-    public function destroyOnCampusRoom(OnCampusRoom $room)
+    public function destroyOnCampusRoom(DeleteRoomRequest $request, int $id)
     {
-        try {
-            return successJsonResponse(
-                'Successfully deleted on-campus room.',
-                OnCampus::findOrFail($room->id)->delete()
-            );
-        } catch (ModelNotFoundException $ex) {
-            return failedJsonResponse(
-                'The specified on-campus room doesn\'t exist.'
-            );
-        }
+        return $request->deleteOnCampusRoom($id);
     }
 }

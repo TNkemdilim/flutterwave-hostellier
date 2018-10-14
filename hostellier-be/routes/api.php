@@ -58,5 +58,7 @@ Route::group(['middleware' => ['auth:api', 'api.student']], function () {
 Route::group(['middleware' => ['auth:api', 'api.admin']], function () {
     // Rooms
     Route::post('/rooms/off-campus', 'Api\V1\RoomController@createOffCampusRoom');
+    Route::delete('/rooms/off-campus/{id}', 'Api\V1\RoomController@destroyOffCampusRoom');
     Route::post('/rooms/on-campus', 'Api\V1\RoomController@createOnCampusRoom');
+    Route::delete('/rooms/on-campus/{id}', 'Api\V1\RoomController@destroyOnCampusRoom');
 });
