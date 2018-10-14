@@ -10,7 +10,7 @@ class Admin extends Model
     use Notifiable;
 
     /**
-     * Validation rules for a student during create.
+     * Validation rules for an admin during create.
      * 
      * @return Array
      */
@@ -23,7 +23,7 @@ class Admin extends Model
     }
 
     /**
-     * Validation rules for a student during update.
+     * Validation rules for an admin during update.
      * 
      * @return Array
      */
@@ -41,7 +41,7 @@ class Admin extends Model
      * @var array
      */
     protected $fillable = [
-        'firstname', 'lastname',
+        'user_id', 'firstname', 'lastname',
     ];
 
     /**

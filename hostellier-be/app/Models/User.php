@@ -64,6 +64,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Checks if a user an admin.
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return strtolower($this->accountType()->first()->name) == UserEnum::ADMIN;
+    }
+
+    /**
      * Returns details of a student (such a user must truely be a student).
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne|string
@@ -82,6 +92,20 @@ class User extends Authenticatable
         }
 
         return $this->hasOne('App\Models\Student');
+    }
+
+    /**
+     * Returns details of a student (such a user must truely be a student).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne|string
+     */
+    public function admin()
+    {
+        if (!$this->isAdmin()) {
+            return null;
+        }
+
+        return $this->hasOne('App\Models\Admin');
     }
 
     /**

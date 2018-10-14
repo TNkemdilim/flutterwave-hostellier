@@ -16,8 +16,9 @@ use Illuminate\Http\Request;
 /**
  * 🎉 Authentication & Registration
  */
-Route::post('auth/student/login', 'Api\V1\AuthController@loginStudent');
+Route::post('auth/{accountType}/login', 'Api\V1\AuthController@login');
 Route::post('auth/student/register', 'Api\V1\AuthController@registerStudent');
+Route::post('auth/admin/register', 'Api\V1\AuthController@registerAdmin');
 
 /**
  * 🎉 

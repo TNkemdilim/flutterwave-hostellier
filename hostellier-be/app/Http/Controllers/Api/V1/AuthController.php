@@ -10,7 +10,8 @@ namespace App\Http\Controllers\Api\V1;
  * General Imports
  */
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Authentication\LoginStudentRequest;
+use App\Http\Requests\Authentication\LoginRequest;
+use App\Http\Requests\Authentication\RegisterAdminRequest;
 use App\Http\Requests\Authentication\RegisterStudentRequest;
 use App\Http\Requests\Authentication\ChangePasswordRequest;
 
@@ -22,19 +23,19 @@ use App\Utilities\Constants\UserEnum;
 class AuthController extends Controller
 {
     /**
-     * Login a student.
+     * Login a user {Student | Admin}.
      *
-     * @param LoginStudentRequest $request  
+     * @param LoginRequest $request  
      * 
      * @return \Illuminate\Http\Response
      */
-    public function loginStudent(LoginStudentRequest $request)
+    public function login(LoginRequest $request, $accountType)
     {
-        return $request->loginStudent();
+        return $request->login($accountType);
     }
 
     /**
-     * Register a new influencer.
+     * Register a new student.
      *
      * @param RegisterStudentRequest $request 
      * 
@@ -43,6 +44,18 @@ class AuthController extends Controller
     public function registerStudent(RegisterStudentRequest $request)
     {
         return $request->registerStudent();
+    }
+
+    /**
+     * Register a new student.
+     *
+     * @param RegisterStudentRequest $request 
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function registerAdmin(RegisterAdminRequest $request)
+    {
+        return $request->registerAdmin();
     }
 
     /**
