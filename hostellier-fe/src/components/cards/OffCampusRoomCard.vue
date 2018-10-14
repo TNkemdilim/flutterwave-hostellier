@@ -19,7 +19,7 @@
             v-if="!hidePaymentButton"
             :amount="room.price * 100"
             :email="user.email"
-            :paystackkey=PAYSTACK_KEY
+            :paystackkey="PAYSTACK_KEY"
             :reference="reference"
             :callback="callback"
             :close="close"
