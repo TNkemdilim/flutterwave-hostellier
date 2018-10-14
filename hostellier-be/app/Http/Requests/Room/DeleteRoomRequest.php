@@ -42,7 +42,7 @@ class DeleteRoomRequest extends BaseFormRequest
             return self::successJsonResponse(
                 'Successfully deleted off-campus room.'
             );
-        } catch (ModelNotFoundException $ex) {
+        } catch (\Exception $ex) {
             return self::failedJsonResponse(
                 'The specified off-campus room doesn\'t exist.'
             );
