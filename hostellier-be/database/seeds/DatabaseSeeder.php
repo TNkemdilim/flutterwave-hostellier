@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(CourseTableSeeder::class);
+        $this->call(CourseSeeder::class);
         factory(App\Models\OffCampusRoom::class, 30)->create();
         factory(App\Models\OnCampusRoom::class, 30)->create()->each(
             function ($onCampusRoom) {

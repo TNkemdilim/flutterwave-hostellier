@@ -17,7 +17,5 @@ class UserTypeSeeder extends Seeder
                 ['name' => 'admin']
             ]
         );
-
-        echo "Successfully ran UserTypesSeeder\n";
     }
 }
