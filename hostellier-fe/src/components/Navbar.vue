@@ -11,11 +11,11 @@
           <router-link to="/" class="nav-link">Book Off Campus</router-link>
         </li>
         <li class="nav-item">
-          <router-link v-if="isLoggedIn" to="/on-campus" class="nav-link">Book On Campus</router-link>
+          <router-link v-if="isLoggedIn && isStudent" to="/on-campus" class="nav-link">Book On Campus</router-link>
         </li>
       </ul>
 
-      <ul v-else class="navbar-nav mr-auto">
+      <ul v-else-if="isAdmin" class="navbar-nav mr-auto">
         <li class="nav-item active">
           <router-link to="/admin/rooms" class="nav-link">Off-campus</router-link>
         </li>
@@ -69,7 +69,9 @@
 
 <script>
 import { LoginModal, SignupModal } from "@/components";
-// import StudentAuth from "@/utilities/auth/student";
+import StudentAuth from "@/utilities/auth/student";
+import AdminAuth from "@/utilities/auth/admin";
+import { router as Router } from "@/helpers/routing";
 // import { UPDATE_LOGIN_STATUS } from "@/store/mutation-types";
 
 export default {
@@ -87,7 +89,7 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch("setLoginStatus", false);
-      // redirect to homepage
+      Router.go("/off-campus");
     }
   },
   computed: {
@@ -98,7 +100,10 @@ export default {
       return this.$store.getters.user;
     },
     isStudent() {
-      return !this.loginAsStudent;
+      return StudentAuth.isLoggedIn();
+    },
+    isAdmin() {
+      return AdminAuth.isLoggedIn();
     },
     showRoomOptionsButtons() {
       return !this.isLoggedIn || (this.isLoggedIn && this.isStudent);
