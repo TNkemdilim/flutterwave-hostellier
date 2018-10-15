@@ -49,7 +49,5 @@ class AdminSeeder extends Seeder
         } catch (\Exception $ex) {
             // User already exists
         }
-
-        echo "Successfully executed AdminSeeder\n";
     }
 }
