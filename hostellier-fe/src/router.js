@@ -35,7 +35,7 @@ export default new Router({
     {
       path: "/",
       alias: "/off-campus",
-      beforeEnter: VerifyIfStudent,
+      // beforeEnter: VerifyIfStudent,
       name: "HomeOffCampus",
       component: HomeOffCampus
     },

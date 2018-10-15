@@ -20,10 +20,13 @@ Route::post('auth/{accountType}/login', 'Api\V1\AuthController@login');
 Route::post('auth/student/register', 'Api\V1\AuthController@registerStudent');
 Route::post('auth/admin/register', 'Api\V1\AuthController@registerAdmin');
 
+
+
 /**
  * 🎉 
  */
 Route::get('/rooms/off-campus', 'Api\V1\RoomController@indexOffCampusRooms');
+Route::get('/images/{id}', 'Api\V1\ImageController@getHostelImage');
 
 /**
  * 🎉 

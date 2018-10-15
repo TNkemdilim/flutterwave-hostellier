@@ -11,7 +11,7 @@
           <router-link to="/" class="nav-link">Book Off Campus</router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/on-campus" class="nav-link">Book On Campus</router-link>
+          <router-link v-if="isLoggedIn" to="/on-campus" class="nav-link">Book On Campus</router-link>
         </li>
       </ul>
 
