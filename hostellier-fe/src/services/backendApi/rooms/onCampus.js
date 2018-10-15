@@ -23,6 +23,31 @@ class OnCampusRoomsApi {
       return e.response.data;
     }
   }
+
+  async addOnCampusRoom(formData) {
+    try {
+      var response = await HTTP.post(
+        Endpoints.OnCampusRoom,
+        formData,
+        this._authToken
+      );
+      return response.data;
+    } catch (e) {
+      return e.response.data;
+    }
+  }
+
+  async deleteOnCampusRoom(id) {
+    try {
+      var response = await HTTP.get(
+        `${Endpoints.OnCampusRoom}/${id}`,
+        this._authToken
+      );
+      return response.data;
+    } catch (e) {
+      return e.response.data;
+    }
+  }
 }
 
 export default OnCampusRoomsApi;

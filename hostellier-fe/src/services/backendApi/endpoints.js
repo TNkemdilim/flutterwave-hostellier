@@ -3,11 +3,15 @@ const enpointVersion = "api/v1";
 // Authentication
 export const loginStudent = `${enpointVersion}/auth/student/login`;
 export const registerStudent = `${enpointVersion}/auth/student/register`;
+export const loginAdmin = `${enpointVersion}/auth/admin/login`;
+export const registerAdmin = `${enpointVersion}/auth/admin/register`;
 
 // Rooms
 export const allCampusRooms = `${enpointVersion}/rooms`;
 export const allOffCampusRooms = `${enpointVersion}/rooms/off-campus`;
 export const allOnCampusRooms = `${enpointVersion}/rooms/on-campus`;
+export const OffCampusRoom = `${enpointVersion}/rooms/off-campus`;
+export const OnCampusRoom = `${enpointVersion}/rooms/on-campus`;
 
 // Booking (On-Campus)
 export const getOnCampusBooking = `${enpointVersion}/booking/off-campus`;

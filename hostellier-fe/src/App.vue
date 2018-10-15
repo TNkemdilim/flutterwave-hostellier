@@ -8,8 +8,8 @@
 
 <script>
 import { Navbar, Footer } from "@/components";
-import StudentAuth from "@/utilities/auth/student";
 import StudentManager from "@/utilities/dataManager/studentManager";
+import AdminManager from "@/utilities/dataManager/adminManager";
 import * as types from "@/store/mutation-types.js";
 
 export default {
@@ -18,14 +18,23 @@ export default {
     "inverted-footer": Footer
   },
   created() {
+    // Try student
     let userData = StudentManager.getStudentData();
-    userData =
-      userData !== null
-        ? userData
-        : {
-            email: ""
-          };
-    this.$store.commit(types.UPDATE_LOGIN_STATUS, StudentAuth.isLoggedIn());
+    let isLoggedIn = true;
+
+    if (userData === null) {
+      // Try admin
+      userData = AdminManager.getAdminData();
+    }
+
+    if (userData === null) {
+      isLoggedIn = false;
+      userData = {
+        email: ""
+      };
+    }
+
+    this.$store.commit(types.UPDATE_LOGIN_STATUS, isLoggedIn);
     this.$store.commit(types.UPDATE_USER, userData);
     this.$store.commit(
       types.USER_TOKEN,

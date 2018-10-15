@@ -6,7 +6,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+      <ul v-if="showRoomOptionsButtons" class="navbar-nav mr-auto">
         <li class="nav-item active">
           <router-link to="/" class="nav-link">Book Off Campus</router-link>
         </li>
@@ -14,11 +14,23 @@
           <router-link to="/on-campus" class="nav-link">Book On Campus</router-link>
         </li>
       </ul>
+
+      <ul v-else class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <router-link to="/admin/rooms/on-campus/add" class="nav-link">Add On-campus room</router-link>
+        </li>
+        <li class="nav-item active">
+          <router-link to="/admin/rooms/off-campus/add" class="nav-link">Add Off-campus room</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link to="/admin/show-all-rooms" class="nav-link">Show All Rooms</router-link>
+        </li>
+      </ul>
       
       <ul v-if="isLoggedIn" class="navbar-nav my-2 my-lg-0">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <a class="text-white">Hello Tochukwu</a>&nbsp;
+            <a class="text-white">Hello {{ user.firstname}}</a>&nbsp;
             <i class="icon user big circle"></i>
           </a>
           
@@ -32,7 +44,7 @@
               Profile
             </router-link>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" @click="logout" href="#">
               <i class="icon sign-out"></i>
               Logout
             </a>
@@ -41,18 +53,21 @@
       </ul>
 
       <ul v-else class="navbar-nav my-2 my-lg-0">
-        <button class="ui right inverted button my-2 my-sm-0" data-toggle="modal" data-target="#loginModal">Login</button>
+        <button class="ui right inverted button my-2 my-sm-0" @click="loginAsStudent = false" data-toggle="modal" data-target="#loginModal">Login as admin</button>
+        <button class="ui right inverted button my-2 my-sm-0" @click="loginAsStudent = true" data-toggle="modal" data-target="#loginModal">Login as student</button>
         <button class="ui right orange button my-2 my-sm-0" data-toggle="modal" data-target="#signupModal">Signup</button>
       </ul>
     </div>
     
-    <login-modal />
+    <login-modal :isStudent="this.loginAsStudent" />
     <signup-modal />
   </nav>
 </template>
 
 <script>
 import { LoginModal, SignupModal } from "@/components";
+// import StudentAuth from "@/utilities/auth/student";
+// import { UPDATE_LOGIN_STATUS } from "@/store/mutation-types";
 
 export default {
   name: "navbar",
@@ -62,7 +77,15 @@ export default {
   },
   created() {},
   data() {
-    return {};
+    return {
+      loginAsStudent: true
+    };
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("setLoginStatus", false);
+      // redirect to homepage
+    }
   },
   computed: {
     isLoggedIn() {
@@ -70,6 +93,12 @@ export default {
     },
     user() {
       return this.$store.getters.user;
+    },
+    isStudent() {
+      return !this.loginAsStudent;
+    },
+    showRoomOptionsButtons() {
+      return !this.isLoggedIn || (this.isLoggedIn && this.isStudent);
     }
   }
 };

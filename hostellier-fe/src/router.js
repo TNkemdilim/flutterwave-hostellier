@@ -14,6 +14,17 @@ import SharedBookingSection from "./views/Student/Bookings/Sections/SharedBookin
 import StudentViewProfileSection from "./views/Student/Profile/Sections/ViewProfile";
 import StudentChangePasswordSection from "./views/Student/Profile/Sections/ChangePassword";
 
+// Admin > Dashboard
+import AdminDashboard from "./views/Admin/Index";
+
+// Admin > Rooms Management
+import AddOffCampusRoom from "./views/Admin/Rooms/AddOffCampusRoom";
+import AddOnCampusRoom from "./views/Admin/Rooms/AddOnCampusRoom";
+
+// Middlewares
+import VerifyIfStudent from "@/middlewares/verifyIfStudent";
+import VerifyIfAdmin from "@/middlewares/verifyIfAdmin";
+
 Vue.use(Router);
 
 export default new Router({
@@ -22,11 +33,13 @@ export default new Router({
     {
       path: "/",
       alias: "/off-campus",
+      beforeEnter: VerifyIfStudent,
       name: "HomeOffCampus",
       component: HomeOffCampus
     },
     {
       path: "/on-campus",
+      beforeEnter: VerifyIfStudent,
       name: "HomeOnCampus",
       component: HomeOnCampus
     },
@@ -49,6 +62,7 @@ export default new Router({
     },
     {
       path: "/me/bookings",
+      beforeEnter: VerifyIfStudent,
       name: "MyBookings",
       component: StudentBookings,
       children: [
@@ -69,6 +83,27 @@ export default new Router({
           component: SharedBookingSection
         }
       ]
+    },
+
+    // Admin
+    {
+      path: "/admin",
+      beforeEnter: VerifyIfAdmin,
+      alias: "/admin/show-all-rooms",
+      name: "AdminDashboard",
+      component: AdminDashboard
+    },
+    {
+      path: "/admin/rooms/on-campus/add",
+      beforeEnter: VerifyIfAdmin,
+      name: "Add On Campus Room",
+      component: AddOnCampusRoom
+    },
+    {
+      path: "/admin/rooms/off-campus/add",
+      beforeEnter: VerifyIfAdmin,
+      name: "Add Off Campus Room",
+      component: AddOffCampusRoom
     }
   ]
 });

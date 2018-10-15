@@ -1,2 +1,3 @@
 import StudentAuth from "./studentAuth";
-export { StudentAuth };
+import AdminAuth from "./adminAuth";
+export { StudentAuth, AdminAuth };

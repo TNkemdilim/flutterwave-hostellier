@@ -11,6 +11,9 @@
               </p>
               <div class="account-wall">
                 <img class="profile-img" :src="userImage" alt="">
+                <div>
+                  Login as {{this.isStudent ? 'Student' : 'Admin'}}.
+                </div>
                 <form class="form-signin">
                   <input v-model="formData.email" type="text" class="form-control" placeholder="Email" required autofocus>
                   <input v-model="formData.password" type="password" class="form-control" placeholder="Password" required>
@@ -40,11 +43,12 @@ const USER_IMAGE =
   "https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120";
 
 import StudentAuth from "../../utilities/auth/student";
-// import router from "../../helpers/routing";
-import { UPDATE_LOGIN_STATUS } from "@/store/mutation-types";
+import AdminAuth from "../../utilities/auth/admin";
+import { router as Router } from "@/helpers/routing";
 
 export default {
   name: "login-modal",
+  props: ["isStudent"],
   data() {
     return {
       userImage: USER_IMAGE,
@@ -58,14 +62,27 @@ export default {
   methods: {
     loginStudent: async function(event) {
       event.preventDefault();
-      this.$loading("Trying Log you in.");
-      let result = await StudentAuth.login(this.formData);
+      this.$loading("Attempting to login.");
+
+      let result = {
+        status: false
+      };
+      let routeTo = "/on-campus";
+
+      if (this.isStudent) {
+        result = await StudentAuth.login(this.formData);
+      } else {
+        result = await AdminAuth.login(this.formData);
+        routeTo = "/admin";
+      }
 
       this.$loading.close();
       if (result.status === true) {
         this.$toasted.success("\tSuccessfully logged in.");
-        this.$store.commit(UPDATE_LOGIN_STATUS, true);
+        this.$store.dispatch("setLoginStatus", true); //impove on this
         this.closeModalNow();
+        console.log(routeTo);
+        Router.go(routeTo);
       } else {
         this.$toasted.error(result.message);
       }
@@ -76,7 +93,6 @@ export default {
   }
 };
 </script>
-
 
 <style lang="scss" scoped>
 </style>

@@ -9,7 +9,7 @@ import Student from "../utilities/auth/student";
 export default function verifyIfStudent(to, from, next) {
   if (!Student.isLoggedIn()) {
     next({
-      path: "/",
+      path: "/admin",
       query: {
         redirect: to.fullPath
       }
