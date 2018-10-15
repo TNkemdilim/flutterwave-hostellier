@@ -15,8 +15,10 @@
       </div>
       <div class="extra">
         <div>
+          <span v-if="showPrice" class="ui label green"><i class="money icon"></i>N {{ room.price }}</span>
           <span class="ui label"><i class="man icon"></i> Male</span>
           <span class="ui label"><i class="bed icon"></i> {{ room.students_per_room }} Students</span>
+          <span v-if="showNoOfOccupants" class="ui label"><i class="bed icon"></i>Currently: {{ room.no_of_occupants }} occupant(s)</span>
         </div>
 
         <div>
@@ -35,6 +37,9 @@
             <i class="icon cart"></i>
             Purchase for N{{ room.price }}
           </paystack-button>
+
+          <slot name="button">
+          </slot>
         </div>
       </div>
     </div>
@@ -60,6 +65,16 @@ export default {
       required: true
     },
     hidePaymentButton: {
+      type: Boolean,
+      default: false,
+      required: false
+    },
+    showNoOfOccupants: {
+      type: Boolean,
+      default: false,
+      required: false
+    },
+    showPrice: {
       type: Boolean,
       default: false,
       required: false

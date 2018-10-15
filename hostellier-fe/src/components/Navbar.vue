@@ -17,13 +17,16 @@
 
       <ul v-else class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <router-link to="/admin/rooms/on-campus/add" class="nav-link">Add On-campus room</router-link>
-        </li>
-        <li class="nav-item active">
-          <router-link to="/admin/rooms/off-campus/add" class="nav-link">Add Off-campus room</router-link>
+          <router-link to="/admin/rooms" class="nav-link">Off-campus</router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/admin/show-all-rooms" class="nav-link">Show All Rooms</router-link>
+          <router-link to="/admin/rooms/on-campus" class="nav-link">On-campus</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link to="/admin/rooms/on-campus/add" class="nav-link">Add On-campus room</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link to="/admin/rooms/off-campus/add" class="nav-link">Add Off-campus room</router-link>
         </li>
       </ul>
       
@@ -35,7 +38,7 @@
           </a>
           
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <router-link class="dropdown-item" to="/me/bookings/on-campus">
+            <router-link v-if="showRoomOptionsButtons" class="dropdown-item" to="/me/bookings/on-campus">
               <i class="icon warehouse"></i>
               My Bookings
             </router-link>

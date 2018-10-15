@@ -66,6 +66,20 @@ class RoomController extends Controller
     }
 
     /**
+     * Get all off-campus bookings.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexOnCampusRoomsWithoutFiltering()
+    {
+        // Todo: Optimize query by utilizing in-built `chunk(...)` method.
+        return self::successJsonResponse(
+            'Successfully retrieved all off-campus rooms',
+            OnCampusRoom::get()
+        );
+    }
+
+    /**
      * Get all on-campus bookings available for the currently 
      * logged in student.
      *

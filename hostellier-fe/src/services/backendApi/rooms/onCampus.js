@@ -9,8 +9,7 @@ class OnCampusRoomsApi {
   }
 
   /**
-   * Login a student.
-   * @param {Object} formData Student data
+   * Retrieves all on-campus rooms available.
    */
   async getAllOnCampusRooms() {
     try {
@@ -37,9 +36,9 @@ class OnCampusRoomsApi {
     }
   }
 
-  async deleteOnCampusRoom(id) {
+  async deleteOnCampusRoomById(id) {
     try {
-      var response = await HTTP.get(
+      var response = await HTTP.delete(
         `${Endpoints.OnCampusRoom}/${id}`,
         this._authToken
       );

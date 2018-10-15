@@ -34,9 +34,9 @@ class OffCampusRoomsApi {
     }
   }
 
-  async deleteOffCampusRoom(id) {
+  async deleteOffCampusRoomById(id) {
     try {
-      var response = await HTTP.get(
+      var response = await HTTP.delete(
         `${Endpoints.OffCampusRoom}/${id}`,
         this._authToken
       );

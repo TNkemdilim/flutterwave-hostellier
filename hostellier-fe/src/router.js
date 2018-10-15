@@ -15,11 +15,13 @@ import StudentViewProfileSection from "./views/Student/Profile/Sections/ViewProf
 import StudentChangePasswordSection from "./views/Student/Profile/Sections/ChangePassword";
 
 // Admin > Dashboard
-import AdminDashboard from "./views/Admin/Index";
+import AdminDashboard from "./views/Admin/ManageOffCampusRooms";
 
 // Admin > Rooms Management
 import AddOffCampusRoom from "./views/Admin/Rooms/AddOffCampusRoom";
 import AddOnCampusRoom from "./views/Admin/Rooms/AddOnCampusRoom";
+import ManageOffCampusRooms from "./views/Admin/ManageOffCampusRooms";
+import ManageOnCampusRooms from "./views/Admin/ManageOnCampusRooms";
 
 // Middlewares
 import VerifyIfStudent from "@/middlewares/verifyIfStudent";
@@ -87,11 +89,22 @@ export default new Router({
 
     // Admin
     {
-      path: "/admin",
+      path: "/admin/rooms",
       beforeEnter: VerifyIfAdmin,
-      alias: "/admin/show-all-rooms",
+      alias: "/admin",
       name: "AdminDashboard",
       component: AdminDashboard
+    },
+    {
+      path: "/admin/rooms/off-campus",
+      alias: "/",
+      name: "ManageOffCampusRooms",
+      component: ManageOffCampusRooms
+    },
+    {
+      path: "/admin/rooms/on-campus",
+      name: "ManageOnCampusRooms",
+      component: ManageOnCampusRooms
     },
     {
       path: "/admin/rooms/on-campus/add",

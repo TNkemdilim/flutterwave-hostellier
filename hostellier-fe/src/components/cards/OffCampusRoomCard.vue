@@ -28,6 +28,8 @@
             class="ui primary button"
         >
         </paystack>
+        <slot name="button">
+        </slot>
       </span>
       <span>
         <i class="clock icon"></i>
