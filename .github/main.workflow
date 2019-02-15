@@ -14,7 +14,7 @@ action "Heroku login" {
 }
 
 action "Add git remote urls" {
-  uses = "srt32/git-actions@v0.0.3"
+  uses = "TNkemdilim/git-actions@add-git-subtree"
   args = "git remote add heroku-fe ${HEROKU_FRONTEND} && git remote add heroku-be ${HEROKU_BACKEND}"
   env = {
     HEROKU_FRONTEND = "https://git.heroku.com/hostellier.git"
@@ -23,13 +23,13 @@ action "Add git remote urls" {
 }
 
 action "Deploy front-end to Heroku" {
-  uses = "srt32/git-actions@v0.0.3"
+  uses = "TNkemdilim/git-actions@add-git-subtree"
   needs = "Heroku login"
   args = "git subtree push --prefix=hostellier-fe heroku-fe master"
 }
 
 action "Deploy backend-end to Heroku" {
-  uses = "srt32/git-actions@v0.0.3"
+  uses = "TNkemdilim/git-actions@add-git-subtree"
   needs = "Heroku login"
   args = "git subtree push --prefix=hostellier-be heroku-be master"
 }
